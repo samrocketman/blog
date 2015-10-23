@@ -1,0 +1,14 @@
+markdown: rdiscount
+highlighter: true
+rdiscount:
+  extensions: [smart, autolink]
+
+comments :
+   provider: disqus
+   disqus:
+     short_name: samrocketmanblog
+
+name: Sam Gleske
+description: adventures in computing
+url: http://sam.gleske.net/blog
+twitter_handle: sag47

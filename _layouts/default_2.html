@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="{{ site.name }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>{{page.title}}</title>
+
+
+
+    <!-- Bootstrap -->
+    <link href="{{ site.url }}/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="{{ site.url }}/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <!-- syntax highlighting CSS -->
+    <link rel="stylesheet" href="{{ site.url }}/css/syntax.css" type="text/css" />
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ site.url }}/feed.xml" />
+    <link rel="stylesheet" href="{{ site.url }}/css/screen.css" type="text/css"
+      media="screen, projection" />
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+    <a class="brand" href="{{ site.url }}/index.html">{{ site.name }} - {{ site.description }}</a>
+    <ul class="nav">
+      <li><a href="http://sam.gleske.net/">Home</a></li>
+      <li><a href="{{ site.url }}/archive.html">Archive</a></li>
+      <li><a href="https://github.com/samrocketman/blog/">Source</a></li>
+    </ul>
+      </div>
+    </div>
+
+    <div class="customize">
+      <div class="row-fluid">
+    <div class="span7 offset1">
+      <p>
+        <a href="https://twitter.com/{{ site.twitter_handle }}" class="twitter-follow-button"
+           data-show-count="false" data-show-screen-name="false">Follow</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </p>
+
+      {{content}}
+    </div>
+      </div>
+    </div>
+
+    <!-- Footer  ==================================== -->
+    <footer class="footer">
+      <div class="container">
+        <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"><img src="https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png" alt="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" /></a> All original content by {{ site.name }}.</p>
+        <p><a href="http://twitter.com/{{ site.twitter_handle }}/">twitter.com/{{ site.twitter_handle }}</a></p>
+      </div>
+    </footer>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
