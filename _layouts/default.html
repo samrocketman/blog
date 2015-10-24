@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
   <head>
-    <title>{{page.title}}</title>
+    <title>{{ page.title }}</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="{{ site.name }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -29,7 +29,7 @@
     <div class="customize">
       <div class="row-fluid">
     <div class="span7 offset1">
-      {% if site.env == 'production' %}
+      {% if site.env == 'production' && !post %}
       <p>
         <a href="https://twitter.com/{{ site.twitter_handle }}" class="twitter-follow-button"
            data-show-count="false" data-show-screen-name="false">Follow</a>
@@ -52,7 +52,7 @@
     </footer>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="{{ site.url }}/js/bootstrap.min.js"></script>
 
   </body>
 </html>
