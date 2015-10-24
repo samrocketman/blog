@@ -1,2 +1,3 @@
 Original theme: https://github.com/mojombo/mojombo.github.io
 Site forked from: https://github.com/joearms/joearms.github.com
+Categories and tags from: https://github.com/minddust/minddust.github.io

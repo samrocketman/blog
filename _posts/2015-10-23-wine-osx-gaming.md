@@ -1,7 +1,11 @@
 ---
 layout: post
 title: Windows-only games on Mac OS X
-tags: gaming wine osx
+category: gaming
+tags:
+ - gaming
+ - wine
+ - osx
 year: 2015
 month: 10
 day: 23
