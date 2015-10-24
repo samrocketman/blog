@@ -1,3 +1,33 @@
 body {
   background-color: #fff4f4;
 }
+h1, h2, h3, h4, h5, h6 {
+    cursor: text;
+    font-weight: bold;
+    line-height: 1.7;
+    margin: 1em 0 15px;
+    padding: 0;
+    position: relative;
+    text-rendering: optimizelegibility;
+}
+h1 {
+    border-bottom: 1px solid #ddd;
+    font-size: 2.5em;
+}
+h2 {
+    border-bottom: 1px solid #eee;
+    font-size: 2em;
+}
+h3 {
+    font-size: 1.5em;
+}
+h4 {
+    font-size: 1.2em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+    color: #777;
+    font-size: 1em;
+}
