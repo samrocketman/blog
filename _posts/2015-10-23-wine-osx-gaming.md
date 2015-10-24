@@ -12,6 +12,9 @@ day: 23
 published: true
 ---
 
+* TOC
+{:toc}
+
 Recently I had a craving to play some Windows-only games on my Macbook Pro.  I
 achieved this with [WINE][wine].  None of the online tutorials were sufficient
 for Mac OS so I created this blog post.
@@ -63,23 +66,23 @@ that by doing `homebrew info wine`.
 until winetricks pauses with an installer dialog.  I've accidentally closed
 installers.**
 
-```bash
+{% highlight bash %}
 brew install wine --HEAD
 brew install winetricks
 winetricks corefonts
 winetricks dlls msasn1
-for x in d3dx9_43 d3dx10 d3dx11_43;do winetricks $x; done
-for x in vcrun6sp6 vcrun2003 vcrun2005 vcrun2008 vcrun2010 vcrun2012 vcrun2013;do winetricks $x;done
-for x in dotnet30sp1 quartz msxml3 dxdiag physx;do winetricks $x;done
-```
+for x in d3dx9_43 d3dx10 d3dx11_43; do winetricks $x; done
+for x in vcrun6sp6 vcrun2003 vcrun2005 vcrun2008 vcrun2010 vcrun2012 vcrun2013; do winetricks $x; done
+for x in dotnet30sp1 quartz msxml3 dxdiag physx; do winetricks $x; done
+{% endhighlight %}
 
 That installed the base prerequisites for Fallout (as well as a few other extras
 which are used by other games I play).  Now to configure wine.
 
-```bash
+{% highlight bash %}
 winetricks winxp
 winecfg
-```
+{% endhighlight %}
 
 Once inside of `winecfg`, configure the _Graphics_ tab and enable "Automatically
 capture the mouse in full-screen windows".
@@ -129,16 +132,16 @@ Notes:
 Now we're ready to install Steam.  _Note: don't automatically launch Steam when
 the install is finished._
 
-```bash
+{% highlight bash %}
 winetricks steam
-```
+{% endhighlight %}
 
 Start Steam and install Fallout 3 GOTY Edition and S.T.A.L.K.E.R.: Call of
 Pripyat.  You can start Steam with the following command from the terminal.
 
-```bash
+{% highlight bash %}
 wine 'C:\\Program Files\\Steam\\Steam.exe'
-```
+{% endhighlight %}
 
 After Fallout is installed, don't forget to enable all of the optional DLC (from
 the Fallout Launcher visit DATA FILES and enable them).  Occasionally, there are
@@ -165,10 +168,10 @@ files in `~/Documents/My Games/Fallout3`.
 
 Apply the [`FALLOUT.INI` patch][fallout-ini.patch] with the following commands.
 
-```bash
+{% highlight bash %}
 cd "~/Documents/My Games/Fallout3"
 curl -L "http://bit.ly/1WaaDQf" | patch
-```
+{% endhighlight %}
 
 ###### Known issues
 

@@ -4,10 +4,8 @@ description: adventures in computing
 url: http://sam.gleske.net/blog
 twitter_handle: sag47
 
-markdown: rdiscount
+markdown: kramdown
 highlighter: pygments
-rdiscount:
-  extensions: [smart, autolink]
 comments :
   provider: disqus
   disqus:
