@@ -1,3 +1,4 @@
+env: production
 markdown: rdiscount
 highlighter: pygments
 rdiscount:
