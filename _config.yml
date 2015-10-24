@@ -9,6 +9,6 @@ highlighter: pygments
 rdiscount:
   extensions: [smart, autolink]
 comments :
-   provider: disqus
-   disqus:
-     short_name: samrocketmanblog
+  provider: disqus
+  disqus:
+    short_name: samrocketmanblog

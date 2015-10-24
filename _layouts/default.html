@@ -17,28 +17,27 @@
   <body>
     <div class="navbar">
       <div class="navbar-inner">
-    <a class="brand" href="{{ site.url }}/">{{ site.name }} - {{ site.description }}</a>
-    <ul class="nav">
-      <li><a href="{{ site.url }}/archive.html">Archive</a></li>
-      <li><a href="https://github.com/samrocketman/blog/">Source</a></li>
-      <li><a href="http://sam.gleske.net/">Homepage</a></li>
-    </ul>
+        <a class="brand" href="{{ site.url }}/">{{ site.name }} - {{ site.description }}</a>
+        <ul class="nav">
+          <li><a href="{{ site.url }}/archive.html">Archive</a></li>
+          <li><a href="https://github.com/samrocketman/blog/">Source</a></li>
+          <li><a href="http://sam.gleske.net/">Homepage</a></li>
+        </ul>
       </div>
     </div>
 
     <div class="customize">
       <div class="row-fluid">
-    <div class="span7 offset1">
-      {% if site.env == 'production' && !post %}
-      <p>
-        <a href="https://twitter.com/{{ site.twitter_handle }}" class="twitter-follow-button"
-           data-show-count="false" data-show-screen-name="false">Follow</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-      </p>
-      {% endif %}
+        <div class="span7 offset1">
+          {% if site.env == 'production' %}
+          <p>
+            <a href="https://twitter.com/{{ site.twitter_handle }}" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false">Follow</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          </p>
+          {% endif %}
 
-      {{content}}
-    </div>
+          {{content}}
+        </div>
       </div>
     </div>
 
