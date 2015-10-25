@@ -14,8 +14,7 @@ learn more about me then check out my [first post][post].
   1. development - social media buttons and comments removed.  All URLs point to
      localhost.
   2. simulated production - Just like production but all URLs point to
-     localhost.  Good to check out just before publishing.
-  3. production - All URLs point to `site.url` from `_config.yml`.
+    localhost.  Good to check out just before publishing.
 
 # Getting started with development
 
@@ -50,11 +49,16 @@ This is useful to see live page updates as I'm writing blog posts in
 "development mode."  It works best with dual monitors having the code on one
 screen and the webpage on the other.
 
-# License
+# Summary of Licenses
 
-All content under `_posts/` and `images/` is licensed under [Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 International][cc].  See also
-`3rd_party/` folder for other notices.
+All source code is MIT Licensed by [LICENSE.txt](LICENSE.txt) with exception
+for:
+
+* All content under `_posts/` and `images/` is licensed under [Creative Commons
+  Attribution-NonCommercial-ShareAlike 4.0 International][cc] and is governed by
+  the contents of [LICENSE.txt](LICENSE.txt).
+* Any content governed by 3rd parties which is covered by copyrights, licenses,
+  and notices outlined in the [`3rd_party/`](3rd_party) folder.
 
 [cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 [ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
