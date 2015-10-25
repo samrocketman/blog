@@ -59,5 +59,5 @@ Attribution-NonCommercial-ShareAlike 4.0 International][cc].  See also
 [cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 [ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
 [flux]: https://justgetflux.com/research.html
-[post]: http://sam.gleske.net/blog/2015/10/22/intro.html
+[post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [rvm]: https://rvm.io/
