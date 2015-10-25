@@ -1,0 +1,15 @@
+The following 3rd party copyright notices pertain to *some* parts of this Jekyll
+source code.  None of these 3rd party copyright notices pertain to the /_posts/
+or /images/ folders in the root of this repository.
+
+The copyright dates have been calculated based on the date of the initial commit
+and last commit year at the time the source code was referenced for re-use.
+
+3rd party copyrights follow.  Separator provided for convenience.
+
+================================================================================
+
+
+Copyright (c) 2008-2015 Tom Preston-Werner - https://github.com/mojombo
+Copyright (c) 2013-2015 Joe Armstrong - https://github.com/joearms
+Copyright (c) 2014-2015 Stephan Groß - https://github.com/minddust
