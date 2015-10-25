@@ -5,7 +5,7 @@ Licenses which were displayed in repositories have been used verbatim with
 updated copyright dates.
 
 The copyright dates have been calculated based on the date of the initial commit
-and last commit at the time the source code was referenced for re-use.
+and last commit year at the time the source code was referenced for re-use.
 
 3rd party licenses follow.  Separators provided for convenience.
 
