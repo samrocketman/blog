@@ -108,7 +108,7 @@ git help push
 git help clone
 {% endhighlight %}
 
-You can also access those same man pages using the `man` command and prepending
+You can also access those same man pages using the `man` command and prefixing
 each help page with `git-`.  For example,
 
 {% highlight bash %}
