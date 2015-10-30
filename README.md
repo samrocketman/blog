@@ -15,6 +15,7 @@ learn more about me then check out my [first post][post].
      localhost.
   2. simulated production - Just like production but all URLs point to
     localhost.  Good to check out just before publishing.
+  3. production - The live site.
 
 # Getting started with development
 
