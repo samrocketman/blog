@@ -26,8 +26,12 @@
           <li><a href="http://sam.gleske.net/">Homepage</a></li>
           {% if site.env == 'production' %}
           <li style="padding-top: 15px;padding-left: 15px;width: 59px;height: 20px">
+            <a href="https://twitter.com/{{ site.twitter_handle }}" id="twitter-top" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" style="margin-top: -15px;margin-left: -15px;width: 59px;">Follow</a>
+            <script>
+              //hide element to avoid visual stutter of twitter button
+              document.getElementById('twitter-top').style.display = 'none'
+            </script>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-            <a href="https://twitter.com/{{ site.twitter_handle }}" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" style="margin-top: -15px;margin-left: -15px;width: 59px;">Follow</a>
           </li>
           <li style="padding-top: 15px">
             <iframe src="https://ghbtns.com/github-btn.html?user=samrocketman&type=follow&count=false" frameborder="0" scrolling="0" width="154px" height="20px"></iframe>
