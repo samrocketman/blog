@@ -62,6 +62,9 @@ can help.  [Gerrit][gerrit-protect], [GitHub][github-protect], and
 [GitLab][gitlab-protect] offer solutions to protect branches.  Gerrit offers the
 most advanced access controls around forcing a particular workflow.
 
+> Here's an interesting workflow of how the [ProGit][git-book] book was written:
+> [Living the future of Technical Writing][git-book-workflow]
+
 ##### Learn branching
 
 * [Learn git branching](http://pcottle.github.io/learnGitBranching/).
@@ -141,6 +144,7 @@ with Git to know the right solution on your own when you encounter problems.
 Happy hacking!
 
 [gerrit-protect]: https://gerrit-documentation.storage.googleapis.com/Documentation/2.11.4/access-control.html
+[git-book-workflow]: https://medium.com/@chacon/living-the-future-of-technical-writing-2f368bd0a272
 [git-book]: http://git-scm.com/book
 [git-try]: http://try.github.com/
 [git-workflows]: https://www.atlassian.com/git/workflows
