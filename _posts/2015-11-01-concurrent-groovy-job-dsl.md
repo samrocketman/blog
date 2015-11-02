@@ -22,6 +22,9 @@ Jenkins, Groovy, and [Git][git].  None the less I'm documenting this for myself.
 I'll first try to define a few of these terms before getting into the meat of
 the post for readers who might not be familiar with those topics.
 
+* TOC
+{:toc}
+
 ##### Definitions
 
 * [Concurrent programming][ccp] - is the practice of creating programs that make

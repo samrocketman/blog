@@ -12,9 +12,6 @@ day: 23
 published: true
 ---
 
-* TOC
-{:toc}
-
 Recently I had a craving to play some Windows-only games on my Macbook Pro.  I
 achieved this with [WINE][wine].  None of the online tutorials were sufficient
 for Mac OS so I created this blog post.
@@ -25,6 +22,9 @@ The games I wanted to play were:
 * [S.T.A.L.K.E.R.: Call of Pripyat][wine-cop]
 
 I contributed this install experience to the [WINE AppDB][wine-adb].
+
+* TOC
+{:toc}
 
 ### Tech specs
 

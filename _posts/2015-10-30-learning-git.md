@@ -17,6 +17,9 @@ a link of resources for myself.
 
 I basically referred to the following education resources starting out.
 
+* TOC
+{:toc}
+
 # Learn the basics
 
 * [Learn git by doing][git-try] or if you prefer to lay back with your ebook
