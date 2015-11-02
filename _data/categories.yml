@@ -2,6 +2,10 @@
   name: Education
   color: '#6400c1'
 
+- slug: engineering
+  name: Engineering
+  color: '#ff4b4b'
+
 - slug: gaming
   name: Gaming
   color: '#10a628'

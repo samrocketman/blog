@@ -2,7 +2,9 @@
 layout: post
 title: Learning Git
 category: education
-tags: git programming
+tags:
+ - git
+ - programming
 year: 2015
 month: 10
 day: 30

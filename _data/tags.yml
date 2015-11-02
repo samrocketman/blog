@@ -10,6 +10,15 @@
 - slug: git
   name: Git
 
+- slug: groovy
+  name: Groovy
+
+- slug: jenkins
+  name: Jenkins
+
+- slug: job-dsl-plugin
+  name: Job DSL Plugin
+
 - slug: open-source
   name: Open Source
 

@@ -4,8 +4,8 @@ title: Windows-only games on Mac OS X
 category: gaming
 tags:
  - gaming
- - wine
  - osx
+ - wine
 year: 2015
 month: 10
 day: 23
