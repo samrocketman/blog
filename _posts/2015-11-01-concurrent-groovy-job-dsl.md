@@ -14,7 +14,7 @@ published: true
 ---
 
 Today I had given myself a fun exercise.  Make generating Jenkins jobs faster by
-using concurrent programming.  This is a speed-up optimization to working serial
+using concurrent programming.  This is a speedup optimization to working serial
 code.
 
 This is a bit of an advanced post if one hasn't studied concurrent programming,
@@ -65,26 +65,27 @@ lot of network calls to the [GitHub API][gh-api].  The way I'm generating jobs
 is by generating one job per branch on a GitHub project.
 
 In this case, the bottleneck is networking.  Take for example, the
-[`rails/rails`][rails] project.  It has 38 branches on the project.  32 of those
-branches contain enough information to generate Jenkins jobs according to my
+[`rails/rails`][rails] project.  It has 38 branches in the project.  32 of those
+branches contain enough information to generate Jenkins jobs, according to my
 method.  In my [Job DSL script][dsl-script], I am making the following network
 calls.
 
-* Get project branch list
+* Get project branch list.
 * For each branch, get a file listing.
-* If said branch has a file named `.travis.yml`, then generate a Jenkins job
-  based on it (or skip it if required).
+* If a file named `.travis.yml` exists in the branch, then generate a Jenkins
+  job based on it (or skip it if required).
 
-If 32 branches are build-able (out of 38 total branches).  That means we can
-tally up the number of network calls.
+If 32 branches are able to be built (out of 38 total branches).  That means we
+can tally up the number of network calls.
 
 * 1 network call for the project branch list.
-* 2 network calls for every build-able branch.  (file listing and read file)
-* 1 network call for every non-build-able branch.  (file listing)
+* 2 network calls for every branch capable of building (file listing and read
+  the file).
+* 1 network call for every branch not capable of building (file listing).
 
 The total network calls to generate all Jenkins jobs for the `rails/rails`
-project is `71` network calls (`1` project + `2*32` build-able branches + `1*6`
-non-build-able branches).
+project is `71` network calls (`1` project + `2*32` build branches + `1*6`
+non-build branches).
 
 Our bottleneck is the network.
 
@@ -95,7 +96,7 @@ number of threads rather than limiting ourselves to the number of cores a system
 might have.  Therefore, one way we could solve this is to create one thread per
 branch.  Our program flow would then look something like this.
 
-* Get project data (i.e. list branches)
+* Get project data (i.e. list branches).
 * Create one thread per branch so they all execute concurrently.  Each thread
   will be tasked with getting the file listing for that branch and potentially
   reading the contents of the `.travis.yml` file from that branch.
@@ -107,7 +108,7 @@ Let's first flesh out a few concepts for threading in Groovy.
 
 ##### My first Groovy thread
 
-Gareth Bowles wrote a nice [Groovy script][thread-join] which shows an example
+Gareth Bowles wrote a nice [Groovy script][thread-join] which shows an example,
 accomplishing two things: spawning a thread and joining it.  What is interesting
 is that threads in Groovy can be spawned and started by passing
 [closures][closures].  For example:
@@ -193,7 +194,7 @@ executed using the `it()` method in the `metaClass.withLock` method definition.
 It obtains a `ReentrantLock.lock()` to lock the thread, `it()` executes the
 closure, and `ReentrantLock.unblock()` releases the lock so another thread can
 obtain the lock.  We're doing this to protect a section of the code so that more
-than one thread doesn't modify shared memory by forcing it to run serially.
+than one thread doesn't modify the shared memory by forcing it to run serially.
 
 ##### Working with multiple threads
 
@@ -219,8 +220,8 @@ threads.each {
 
 I created a `List` containing every thread.  This means I needed to append an
 instance of each thread to the `threads` List.  When I wanted to pause the
-program and wait for all threads to finish I simply iterated over the `threads`
-list and joined each thread.
+program and wait for all threads to finish, I iterated over the `threads` list
+and joined each thread.
 
 # Concurrent Job DSL scripts
 

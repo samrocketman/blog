@@ -5,23 +5,23 @@ category: gaming
 tags:
  - gaming
  - osx
- - wine
+ - WINE
 year: 2015
 month: 10
 day: 23
 published: true
 ---
 
-Recently I had a craving to play some Windows-only games on my Macbook Pro.  I
-achieved this with [WINE][wine].  None of the online tutorials were sufficient
+Recently I had a craving to play some Windows-only games on my MacBook Pro.  I
+achieved this with [wine][wine].  None of the online tutorials were sufficient
 for Mac OS so I created this blog post.
 
 The games I wanted to play were:
 
-* [Fallout 3 Game of the year edition][wine-fallout]
-* [S.T.A.L.K.E.R.: Call of Pripyat][wine-cop]
+* [Fallout 3 Game of the year edition][wine-fallout].
+* [S.T.A.L.K.E.R.: Call of Pripyat][wine-cop].
 
-I contributed this install experience to the [WINE AppDB][wine-adb].
+I contributed this install experience to the [wine AppDB][wine-adb].
 
 * TOC
 {:toc}
@@ -30,18 +30,18 @@ I contributed this install experience to the [WINE AppDB][wine-adb].
 
 Hardware:
 
-* Macbook Pro Model A1398
-* CPU: 2.3 GHz Intel Core i7
-* RAM: 16 GB 1600 MHz DDR3
-* GPU: NVIDIA GeForce GT 750M
-* VRAM: 2048 MB
+* MacBook Pro Model A1398.
+* CPU: 2.3 GHz Intel Core i7.
+* RAM: 16 GB 1600 MHz DDR3.
+* GPU: NVIDIA GeForce GT 750M.
+* VRAM: 2048 MB.
 
 Software:
 
-* OS X 10.9.5
-* Xcode Version 6.0.1 (6A317) with developer tools installed
-* [Homebrew 0.9.5][brew]
-* I used homebrew to compile and install [WINE 1.7.53][wine-head]
+* OS X 10.9.5.
+* Xcode Version 6.0.1 (6A317) with the developer tools installed.
+* [Homebrew 0.9.5][brew].
+* I used homebrew to compile and install [wine 1.7.53][wine-head].
 
 Notes about software:
 
@@ -77,7 +77,7 @@ for x in dotnet30sp1 quartz msxml3 dxdiag physx; do winetricks $x; done
 {% endhighlight %}
 
 That installed the base prerequisites for Fallout (as well as a few other extras
-which are used by other games I play).  Now to configure wine.
+which are used by other games I play).  Now to configure WINE.
 
 {% highlight bash %}
 winetricks winxp
@@ -100,7 +100,7 @@ own hardware settings using the Mac utility "System Information."
 2. Select _About this Mac_.
 3. Select _More Info..._ button.
 4. View the section under _Hardware > Graphics/Displays_.
-5. View information about the NVIDIA onboard graphics.  For the Macbook Pro
+5. View information about the NVIDIA on-board graphics.  For the MacBook Pro
    Model A1398 the settings are the following.
    * Vendor: NVIDIA (0x10de)
    * Device ID: 0x0fe9
@@ -111,13 +111,14 @@ section.
 
 ##### Update WINE registry with proper graphics
 
-1. Open the wine registry with the command `wine regedit`.
+1. Open the WINE registry with the command `wine regedit`.
 2. Create the registry key and values:
-  * Create key: `HKEY_CURRENT_USER\Software\Wine\Direct3D`.  Within this key
+  * Create a key: `HKEY_CURRENT_USER\Software\Wine\Direct3D`.  Within this key
     create the following values.
-    * Create DWORD Value `VideoPciDeviceID` and set the value to `0x00000fe9`.
-    * Create DWORD Value `VideoPciVendorID` and set the value to `0x000010de`.
-    * Create the String Value `VideoMemorySize` and set the value to `1024`.  This value is in megabytes.
+    * Create a DWORD Value `VideoPciDeviceID` and set the value to `0x00000fe9`.
+    * Create a DWORD Value `VideoPciVendorID` and set the value to `0x000010de`.
+    * Create a String Value `VideoMemorySize` and set the value to `1024`.  This
+      value is in megabytes.
 
 Notes:
 
@@ -145,7 +146,7 @@ wine 'C:\\Program Files\\Steam\\Steam.exe'
 
 After Fallout is installed, don't forget to enable all of the optional DLC (from
 the Fallout Launcher visit DATA FILES and enable them).  Occasionally, there are
-a few graphics quirks but overall the game performs well.
+a few graphics quirks, but overall the game performs well.
 
 ### Recommended Steam settings
 
@@ -155,9 +156,9 @@ Store page or product updates.  Here's a list of settings I customized.
 * Settings > In-Game
   * Disable steam overlay while in-game
 * Settings > Interface
-  * Favorite window set to Library.
+  * Favorite window set to the Library.
   * Disable Run steam when my computer starts (setting doesn't really matter
-    since it's wine).
+    since it's WINE).
   * Disable Notify me about additions or changes to my games, new releases, and
     upcoming releases.
 
@@ -180,7 +181,7 @@ curl -L "http://bit.ly/1WaaDQf" | patch
   Otherwise, just leave it default (set to `bMultiThreadAudio=0`).
 * You may encounter an issue where graphics bug out when viewing your pip boy
   and other menus.  It looks like assets fail to load.  This may occur even with
-  the `FALLOUT.INI` patch installed. I found the following corrects this issue.
+  the `FALLOUT.INI` patch installed.  I found the following corrects this issue.
   1. In FalloutLauncher, click on _OPTIONS_.
   2. Click the _Advanced_ button.
   3. Click the _Water_ tab.
@@ -189,26 +190,26 @@ curl -L "http://bit.ly/1WaaDQf" | patch
 
 ##### Other graphics settings
 
-Set all graphics to Ultra and enabled max viewing distances.  This game can be
-played with the graphics turned up to max for available settings.
+Set all graphics to Ultra and enabled maximum viewing distances.  This game can
+be played with the graphics turned up to maximum for available settings.
 
 
 ##### Tested screen resolutions
 
-Performant configurations (very performant):
+Well Performing configurations (very well):
 
-* 1280x800 windowed, WINE VRAM set to 1024 MB
-* 1280x800 full screen, WINE VRAM set to 1024 MB
-* 1440x900 full screen, WINE VRAM set to 1024 MB
+* 1280x800 windowed, WINE VRAM set to 1024 MB.
+* 1280x800 full screen, WINE VRAM set to 1024 MB.
+* 1440x900 full screen, WINE VRAM set to 1024 MB.
 
-Tested but with multiple issues:
+Tested, but with multiple issues:
 
-* 1280x800 windowed, WINE VRAM set to 2048 MB - very performant but occasionally
+* 1280x800 windowed, WINE VRAM set to 2048 MB - performs well, but occasionally
   crashes with out of memory errors.
-* 1280x800 full screen, WINE VRAM set to 2048 MB - very performant but
+* 1280x800 full screen, WINE VRAM set to 2048 MB - performs well, but
   occasionally crashes with out of memory errors.
 * 2880x800 full screen, WINE VRAM set to 2048 MB - Menus and load screens are
-  smooth but when loading the game it is unplayable.
+  smooth, but when loading the game it is unplayable.
 
 # S.T.A.L.K.E.R.: Call of Pripyat optimizations
 
@@ -217,30 +218,30 @@ issues on Windows.
 
 ##### Other graphics settings
 
-Set all graphics to highest settings and enabled max viewing distances.  This
-game can be played with the graphics turned up to max settings.
+Set all graphics to highest settings and enabled maximum viewing distances.
+This game can be played with the graphics turned up to max settings.
 
 ##### Tested screen resolutions
 
-Performant configurations (very performant):
+Well Performing configurations (very well):
 
-* 1280x800 windowed, WINE VRAM set to 1024 MB
-* 1280x800 full screen, WINE VRAM set to 1024 MB
-* 2880x800 full screen, WINE VRAM set to 2048 MB
+* 1280x800 windowed, WINE VRAM set to 1024 MB.
+* 1280x800 full screen, WINE VRAM set to 1024 MB.
+* 2880x800 full screen, WINE VRAM set to 2048 MB.
 
 Even at 2880x800 resolution with 2048 MB VRAM configured in WINE, the game
 performed well and didn't crash with any out of memory issues.
 
 # Conclusion
 
-My experience using WINE on Mac OS X to play graphics intense games has been
-great on a Macbook Pro.  Let me know in the comments, if you try out these
+My experience using WINE on Mac OS X to play graphics intensive games has been
+great on a MacBook Pro.  Let me know in the comments, if you try out these
 instructions, how it went.
 
 [brew]: http://brew.sh/
 [fallout-ini.patch]: https://gist.github.com/samrocketman/bd24e426e6fe625810ef
 [wine-adb]: https://appdb.winehq.org/
-[wine-cop]: https://appdb.winehq.org/objectManager.php?sClass=version&iId=18649
-[wine-fallout]: https://appdb.winehq.org/objectManager.php?sClass=version&iId=14322
+[wine-cop]: https://appdb.winehq.org/objectmanager.php?sclass=version&iid=18649
+[wine-fallout]: https://appdb.winehq.org/objectmanager.php?sclass=version&iid=14322
 [wine-head]: https://source.winehq.org/git/wine.git/commit/65d699eb5f7fc151197f3dc9f36499ee3e43f8e7
 [wine]: https://www.winehq.org/

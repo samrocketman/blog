@@ -15,15 +15,15 @@ I've found myself recently answering how to learn Git (or specifically how I
 learned Git).  This post is for anybody who might be interested and it serves as
 a link of resources for myself.
 
-I basically referred to the following education resources starting out.
+I basically referred to the following educational resources starting out.
 
 * TOC
 {:toc}
 
 # Learn the basics
 
-* [Learn git by doing][git-try] or if you prefer to lay back with your ebook
-  reader check out the free [ProGit book][git-book].
+* [Learn git by doing][git-try] or, if you prefer to lay back with your ebook
+  reader, check out the free [Pro Git book][git-book].
 
 Learning the basics by following the above instructions helps to prime you for
 moving on and learning about more advanced topics of Git.  In order to
@@ -50,9 +50,9 @@ Then as you work on your project, regularly commit your changes by making use of
   [other types of workflows][git-workflows].  Many teams use a mix of those
   defined workflows.
 
-Workflows is a simple concept of "how do I work."  There are many strategies one
-can adopt when using Git.  Any time you're working in a semi-complicated project
-that involves either:
+Workflows are a simple concept of, "how do I work."  There are many strategies
+one can adopt when using Git.  Any time you're working in a semi-complicated
+project that involves either:
 
 1. Releasing software.
 2. Working with more than one person.
@@ -62,13 +62,13 @@ even for projects I work on by myself.  When adopting a workflow it's always
 best to adopt it through _social agreement_ rather than putting in technical
 controls to force it.  That is, everybody just informally agrees to adopt the
 workflow else be willing to be shamed for not adopting it.  If you need
-technical controls around how a workflow is adopted, then there is sofware that
+technical controls around how a workflow is adopted, then there is software that
 can help.  [Gerrit][gerrit-protect], [GitHub][github-protect], and
 [GitLab][gitlab-protect] offer solutions to protect branches.  Gerrit offers the
 most advanced access controls around forcing a particular workflow.
 
-> Here's an interesting workflow of how the [ProGit][git-book] book was written:
-> [Living the future of Technical Writing][git-book-workflow]
+> Here's an interesting workflow of how the [Pro Git][git-book] book was
+> written: [Living the future of Technical Writing][git-book-workflow]
 
 ##### Learn branching
 
@@ -85,7 +85,7 @@ tackle more advanced topics when learning Git.  I found these links to videos
 helpful and I also include a video _I produced_.
 
 * [Advanced Git Training](http://youtu.be/x2VbPiNJjpw) (video) disclaimer this
-  was recorded by me.  A knowledge gap talk which bridges a git beginner to
+  was recorded by me.  A knowledge gap talk, which bridges a git beginner to
   becoming an expert.
 * [Git from the bits up](https://www.youtube.com/watch?v=MYP56QJpDr4) an
   advanced talk on Git internals and how it works.
@@ -94,19 +94,20 @@ helpful and I also include a video _I produced_.
 
 ##### Reading documentation
 
-* Read documentation first and search the internet as a fallback.
+* Read the documentation first and search the Internet as a fallback.
 
 It's always better to read the `man` pages (i.e. manual pages) before attempting
 to search for it on the Internet.  There's several reasons to read the man pages
 before turning to the Internet.  Some reasons include:
 
 * You become more familiar with the tool documentation.
-* You read documentation which was explicitly written for the version of the
+* You read the documentation which was explicitly written for the version of the
   tool in which you're working.
-* Increase your own understanding of "how to fish" when you need it.
+* Increase your own understanding of self-drafted solutions which can be
+  succinct.
 
 Occasionally, help you find on the Internet doesn't work for the version of Git
-you're working with simply because the person providing the help is using
+you're working with.  Primarily because the person providing the help is using
 options that aren't available in your (likely older) version.  Here's some
 examples of how to read documentation from the terminal.
 
@@ -126,7 +127,7 @@ man git-clone
 
 Nearly every command you _could use_ with git has an associated man page.  Take
 advantage of that!  `man` is used to read manuals and `apropose` is used to
-search them.  If you've not learned how to read man pages before then internet
+search them.  If you've not learned how to read man pages before then Internet
 search, "how to read man pages."
 
 I enjoy taking man pages and reading them on my ebook reader.  I [wrote a
