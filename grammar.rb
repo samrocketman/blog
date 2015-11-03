@@ -3,10 +3,13 @@
 #https://github.com/samrocketman/blog
 #Checks Jekyl markdown posts for grammar and spelling issues using gingerice.
 
+require 'ap'
+require 'gingerice'
 require 'kramdown'
 require 'loofah'
-require 'gingerice'
-require 'ap'
+require 'thread'
+
+semaphore = Mutex.new
 
 #custom scrubber to remove html elements
 class ScrubParagraph < Loofah::Scrubber
@@ -81,7 +84,10 @@ end
 #try some grammar correcting
 grammar_corrections_required_in={}
 posts.keys.each do |post|
+  puts '---------------------'
+  puts "Checking post: #{post}"
   corrections = []
+  threads = []
   posts[post][:sentences].each do |sentence|
     sentence.strip!
     if sentence.size > 0 and not sentence.match(/{%.*highlight.*%}/) then
@@ -95,16 +101,22 @@ posts.keys.each do |post|
         next
       end
       puts "Grammar checking: #{sentence}"
-      parser = Gingerice::Parser.new
-      recommended = parser.parse sentence
-      if recommended["corrections"].size > 0 then
-        recommended["corrections"] = ignore_some(recommended)
-      end
-      if recommended["corrections"].size > 0 then
-        corrections << recommended
+      threads << Thread.new do
+        parser = Gingerice::Parser.new
+        recommended = parser.parse sentence
+        semaphore.synchronize do
+          if recommended["corrections"].size > 0 then
+            recommended["corrections"] = ignore_some(recommended)
+          end
+          if recommended["corrections"].size > 0 then
+            corrections << recommended
+          end
+        end
       end
     end
   end
+  # finish processing the current file before continuing
+  threads.each { |thread| thread.join }
   if corrections.size > 0 then
     grammar_corrections_required_in[post] = corrections
   end
