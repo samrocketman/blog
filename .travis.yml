@@ -2,3 +2,6 @@ language: ruby
 script:
   - bundle exec jekyll build
   - bundle exec ruby grammar.rb
+branches:
+  only:
+    - gh-pages
