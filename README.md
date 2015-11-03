@@ -1,4 +1,4 @@
-# My blog
+# My blog - [![Build Status][stat]][ci]
 
 This is a blogging website where I post technical information for myself, Sam
 Gleske.  If others find it useful then more power to 'em.  If you'd like to
@@ -62,7 +62,9 @@ for:
   and notices outlined in the [`3rd_party/`](3rd_party) folder.
 
 [cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/
+[ci]: https://travis-ci.org/samrocketman/blog
 [ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
 [flux]: https://justgetflux.com/research.html
 [post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [rvm]: https://rvm.io/
+[stat]: https://travis-ci.org/samrocketman/blog.svg?branch=gh-pages
