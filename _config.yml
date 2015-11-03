@@ -10,3 +10,4 @@ comments :
   provider: disqus
   disqus:
     short_name: samrocketmanblog
+exclude: [vendor]
