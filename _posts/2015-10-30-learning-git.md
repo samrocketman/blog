@@ -9,6 +9,7 @@ year: 2015
 month: 10
 day: 30
 published: true
+type: markdown
 ---
 
 I've found myself recently answering how to learn Git (or specifically how I

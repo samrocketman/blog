@@ -10,6 +10,7 @@ year: 2015
 month: 10
 day: 23
 published: true
+type: markdown
 ---
 
 Recently I had a craving to play some Windows-only games on my MacBook Pro.  I
