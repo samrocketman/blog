@@ -6,6 +6,7 @@ if [ ! -d ".git" ]; then
   echo './tests/signatures.sh'
   exit 1
 fi
+set -x
 
 echo 'Importing public key for samrocketman.'
 
