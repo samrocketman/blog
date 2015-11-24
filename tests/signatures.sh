@@ -34,7 +34,7 @@ function verify_sigs() (
       echo "Missing signature for post: ${x}"
       return 1
     fi
-    if ! ${GPG} --verify "${x}.asc"; then
+    if ! ${GPG} --verify-options show-primary-uid-only --verify "${x}.asc"; then
       echo "Failed signature for post: ${x}"
       return 1
     fi
