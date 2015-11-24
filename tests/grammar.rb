@@ -9,6 +9,8 @@ require 'kramdown'
 require 'loofah'
 require 'thread'
 
+@num_threads = 16
+
 semaphore = Mutex.new
 
 #custom scrubber to remove html elements
@@ -26,12 +28,18 @@ scrubparagraph = ScrubParagraph.new
 
 #read all posts and break them down into different formats
 posts = Hash.new
-Dir.foreach('_posts') do |p|
-  if p.match(/^[^.]\w/) then
+if ARGV.size > 0 then
+  filenames = ARGV.map { |x| (x.sub '_posts/', '').strip }
+else
+  filenames = Dir.entries('_posts')
+end
+filenames.select! { |x| x.end_with? '.md' }
+filenames.each do |p|
+  if p.end_with? '.md' then
     if not posts[p] then
       posts[p] = Hash.new
     end
-    posts[p][:raw] = IO.read("_posts/#{p}")
+    posts[p][:raw] = IO.read("_posts/#{p}").strip
     posts[p][:yaml] = posts[p][:raw].split('---')[1]
     posts[p][:markdown] = posts[p][:raw].split('---')[2]
     posts[p][:html] = Kramdown::Document.new(posts[p][:markdown],options={syntax_highlighter: :pygments}).to_html
@@ -88,6 +96,7 @@ posts.keys.each do |post|
   puts "Checking post: #{post}"
   corrections = []
   threads = []
+  tcount = 0
   posts[post][:sentences].each do |sentence|
     sentence.strip!
     if sentence.size > 0 and not sentence.match(/{%.*highlight.*%}/) then
@@ -101,7 +110,7 @@ posts.keys.each do |post|
         next
       end
       puts "Grammar checking: #{sentence}"
-      threads << Thread.new do
+      threads[tcount] = Thread.new do
         parser = Gingerice::Parser.new
         recommended = parser.parse sentence
         semaphore.synchronize do
@@ -113,8 +122,13 @@ posts.keys.each do |post|
           end
         end
       end
+      if tcount == @num_threads-1 then
+        threads.each { |thread| thread.join }
+      end
+      tcount = (tcount + 1) % @num_threads
     end
   end
+
   # finish processing the current file before continuing
   threads.each { |thread| thread.join }
   if corrections.size > 0 then

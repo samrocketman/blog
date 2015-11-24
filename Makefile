@@ -9,3 +9,8 @@ prod:
 
 deps:
 	bundle install --jobs=3 --retry=3
+
+test:
+	./tests/signatures.sh
+	bundle exec jekyll build
+	./tests/test_grammar_based_on_commit.sh
