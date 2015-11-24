@@ -18,7 +18,7 @@ GPG="gpg --no-default-keyring --keyring ${keyfile}"
 curl -sL 'https://keybase.io/samrocketman/key.asc' | ${GPG} --import
 
 #fully trust public key 7257E65F
-gpg --import-ownertrust <<EOF
+${GPG} --import-ownertrust <<EOF
 8D8BF0E242D8A068572EBF3CE8F732347257E65F:6:
 EOF
 
