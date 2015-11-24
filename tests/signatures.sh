@@ -1,5 +1,4 @@
 #!/bin/bash
-export LC_ALL=C
 export PS4='$ '
 export DEBIAN_FRONTEND=noninteractive
 if [ ! -d ".git" ]; then

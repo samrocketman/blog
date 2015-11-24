@@ -13,4 +13,4 @@ deps:
 test:
 	./tests/signatures.sh
 	bundle exec jekyll build
-	bundle exec ruby grammar.rb
+	./tests/test_grammar_based_on_commit.sh

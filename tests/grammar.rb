@@ -29,24 +29,22 @@ scrubparagraph = ScrubParagraph.new
 #read all posts and break them down into different formats
 posts = Hash.new
 if ARGV.size > 0 then
-  filenames = ARGV.map { |x| x.sub '_posts/', '' }
+  filenames = ARGV.map { |x| (x.sub '_posts/', '').strip }
 else
   filenames = Dir.entries('_posts')
 end
 filenames.select! { |x| x.end_with? '.md' }
 filenames.each do |p|
   if p.end_with? '.md' then
-    if p.match(/^[^.]\w/) then
-      if not posts[p] then
-        posts[p] = Hash.new
-      end
-      posts[p][:raw] = IO.read("_posts/#{p}")
-      posts[p][:yaml] = posts[p][:raw].split('---')[1]
-      posts[p][:markdown] = posts[p][:raw].split('---')[2]
-      posts[p][:html] = Kramdown::Document.new(posts[p][:markdown],options={syntax_highlighter: :pygments}).to_html
-      posts[p][:paragraph] = Loofah.document(posts[p][:html]).scrub!(scrubparagraph).scrub!(:strip).to_text.gsub(/\n/,'  ').strip.gsub(/([^.”"])  ([A-Za-z])/, '\1 \2')
-      posts[p][:sentences] = posts[p][:paragraph].split(/(?<=\.)   *(?=\w)|(?<=\.[”"])   *(?=\w)/)
+    if not posts[p] then
+      posts[p] = Hash.new
     end
+    posts[p][:raw] = IO.read("_posts/#{p}").strip
+    posts[p][:yaml] = posts[p][:raw].split('---')[1]
+    posts[p][:markdown] = posts[p][:raw].split('---')[2]
+    posts[p][:html] = Kramdown::Document.new(posts[p][:markdown],options={syntax_highlighter: :pygments}).to_html
+    posts[p][:paragraph] = Loofah.document(posts[p][:html]).scrub!(scrubparagraph).scrub!(:strip).to_text.gsub(/\n/,'  ').strip.gsub(/([^.”"])  ([A-Za-z])/, '\1 \2')
+    posts[p][:sentences] = posts[p][:paragraph].split(/(?<=\.)   *(?=\w)|(?<=\.[”"])   *(?=\w)/)
   end
 end
 
