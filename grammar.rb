@@ -9,6 +9,8 @@ require 'kramdown'
 require 'loofah'
 require 'thread'
 
+@num_threads = 16
+
 semaphore = Mutex.new
 
 #custom scrubber to remove html elements
@@ -90,6 +92,7 @@ posts.keys.each do |post|
   puts "Checking post: #{post}"
   corrections = []
   threads = []
+  tcount = 0
   posts[post][:sentences].each do |sentence|
     sentence.strip!
     if sentence.size > 0 and not sentence.match(/{%.*highlight.*%}/) then
@@ -103,7 +106,7 @@ posts.keys.each do |post|
         next
       end
       puts "Grammar checking: #{sentence}"
-      threads << Thread.new do
+      threads[tcount] = Thread.new do
         parser = Gingerice::Parser.new
         recommended = parser.parse sentence
         semaphore.synchronize do
@@ -115,8 +118,13 @@ posts.keys.each do |post|
           end
         end
       end
+      if tcount == @num_threads-1 then
+        threads.each { |thread| thread.join }
+      end
+      tcount = (tcount + 1) % @num_threads
     end
   end
+
   # finish processing the current file before continuing
   threads.each { |thread| thread.join }
   if corrections.size > 0 then
