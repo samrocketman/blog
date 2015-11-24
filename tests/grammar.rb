@@ -28,7 +28,13 @@ scrubparagraph = ScrubParagraph.new
 
 #read all posts and break them down into different formats
 posts = Hash.new
-Dir.foreach('_posts') do |p|
+if ARGV.size > 0 then
+  filenames = ARGV.map { |x| x.sub '_posts/', '' }
+else
+  filenames = Dir.entries('_posts')
+end
+filenames.select! { |x| x.end_with? '.md' }
+filenames.each do |p|
   if p.end_with? '.md' then
     if p.match(/^[^.]\w/) then
       if not posts[p] then
