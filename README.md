@@ -19,6 +19,30 @@ learn more about me then check out my [first post][post].
 
 # Getting started with development
 
+#### Prerequisites
+
+The blog requires Node.js 5 and Ruby 2.2 to be installed.  It's best to use
+[nvm][nvm] for Node and [rvm][rvm] for Ruby.
+
+Set up Node using `nvm`.
+
+    nvm install v5.0.0
+
+Set up `rvm`.
+
+    rvm install 2.2
+    #optionally install within a "blog" gemset
+    rvm use 2.2@blog --create
+
+Now when you open a new terminal be sure to execute the following commands
+before modifying the blog.
+
+    nvm install v5.0.0
+    rvm use 2.2@blog
+
+
+#### Install dependencies
+
 I have provided a handy `Makefile` to aide with development.  Here's a summary
 of a few `make` commands I've provided for myself.
 
