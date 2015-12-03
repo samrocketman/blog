@@ -19,8 +19,39 @@ learn more about me then check out my [first post][post].
 
 # Getting started with development
 
-I have provided a handy `Makefile` to aide with development.  Here's a summary
-of a few `make` commands I've provided for myself.
+#### Prerequisites
+
+* OS: Ubuntu GNU/Linux
+* Node.js 5
+* Ruby 2.2
+
+If you're using a Mac, then building the blog won't work.  It's due to
+differences in the BSD toolset vs the GNU toolset.
+
+The blog requires Node.js 5 and Ruby 2.2 to be installed.  It's best to use
+[nvm][nvm] for Node and [rvm][rvm] for Ruby.
+
+Set up Node using `nvm`.
+
+    nvm install v5.0.0
+
+Set up `rvm`.
+
+    rvm install 2.2
+    #optionally install within a "blog" gemset
+    rvm use 2.2@blog --create
+
+Now when you open a new terminal be sure to execute the following commands
+before modifying the blog.
+
+    nvm install v5.0.0
+    rvm use 2.2@blog
+
+
+#### Install dependencies
+
+I have provided a handy `Makefile` to aid with development.  Here's a summary of
+a few `make` commands I've provided for myself.
 
 * `make deps` - will bundle install dependencies.  I assume you're working in a
   managed ruby environment such as [rvm][rvm].  This should be the first command
@@ -65,6 +96,7 @@ for:
 [ci]: https://travis-ci.org/samrocketman/blog
 [ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
 [flux]: https://justgetflux.com/research.html
+[nvm]: https://github.com/creationix/nvm
 [post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [rvm]: https://rvm.io/
 [stat]: https://travis-ci.org/samrocketman/blog.svg?branch=gh-pages
