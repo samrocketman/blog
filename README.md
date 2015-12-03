@@ -50,8 +50,8 @@ before modifying the blog.
 
 #### Install dependencies
 
-I have provided a handy `Makefile` to aide with development.  Here's a summary
-of a few `make` commands I've provided for myself.
+I have provided a handy `Makefile` to aid with development.  Here's a summary of
+a few `make` commands I've provided for myself.
 
 * `make deps` - will bundle install dependencies.  I assume you're working in a
   managed ruby environment such as [rvm][rvm].  This should be the first command
