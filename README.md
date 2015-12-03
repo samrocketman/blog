@@ -21,6 +21,13 @@ learn more about me then check out my [first post][post].
 
 #### Prerequisites
 
+* OS: Ubuntu GNU/Linux
+* Node.js 5
+* Ruby 2.2
+
+If you're using a Mac, then building the blog won't work.  It's due to
+differences in the BSD toolset vs the GNU toolset.
+
 The blog requires Node.js 5 and Ruby 2.2 to be installed.  It's best to use
 [nvm][nvm] for Node and [rvm][rvm] for Ruby.
 
