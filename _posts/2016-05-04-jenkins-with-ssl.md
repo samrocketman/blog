@@ -12,8 +12,10 @@ published: true
 type: markdown
 ---
 
-This brief guide will walk a Jenkins sysadmin through setting up SSL for
-Jenkins.
+Jenkins can be an integral piece of software used to speed up development and
+deliver production services to customers.  Because of this, security in Jenkins
+must be carefully implemented.  This brief guide will walk a Jenkins sysadmin
+through setting up SSL for Jenkins.
 
 * TOC
 {:toc}
@@ -25,6 +27,7 @@ This guide assumes:
 * Prior knowledge of public key infrastructure (PKI).
 * RedHat or CentOS GNU/Linux for file paths.  Jenkins specific knowledge
   translates across distros.
+* The hosting server has a fully qualified domain name.
 * You installed Jenkins via a system package.
 * You're using Jenkins Winstone (the Jenkins built-in web server) which is the
   default.
