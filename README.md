@@ -47,7 +47,6 @@ before modifying the blog.
     nvm install v5.0.0
     rvm use 2.2@blog
 
-
 #### Install dependencies
 
 I have provided a handy `Makefile` to aid with development.  Here's a summary of
@@ -80,6 +79,16 @@ This will reload the page every 5 seconds and scroll to the bottom of the page.
 This is useful to see live page updates as I'm writing blog posts in
 "development mode."  It works best with dual monitors having the code on one
 screen and the webpage on the other.
+
+# Tips for myself
+
+Sign a blog post:
+
+    gpg -abs _posts/post.md
+
+Sign a commit:
+
+    git commit -S
 
 # Summary of Licenses
 

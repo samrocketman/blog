@@ -8,8 +8,8 @@ tags:
  - job-dsl-plugin
  - programming
 year: 2015
-month: 10
-day: 30
+month: 11
+day: 01
 published: true
 type: markdown
 ---

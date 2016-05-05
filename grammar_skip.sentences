@@ -1,2 +1,5 @@
 \.travis\.yml
 it\(\)
+man x509   man s_client
+\(ca\.crt\)
+\(e\.g\. jenkins\)
