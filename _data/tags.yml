@@ -36,3 +36,9 @@
 
 - slug: wine
   name: WINE
+
+- slug: python
+  name: Python
+
+- slug: tips
+  name: Tips

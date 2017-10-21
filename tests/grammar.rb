@@ -41,7 +41,7 @@ filenames.each do |p|
     end
     posts[p][:raw] = IO.read("_posts/#{p}").strip
     posts[p][:yaml] = posts[p][:raw].split('---')[1]
-    posts[p][:markdown] = posts[p][:raw].split('---')[2]
+    posts[p][:markdown] = posts[p][:raw].split('---')[2].split("\n").map { |line| line.gsub(/(`[^`]+`)/, 'command') }.join("\n")
     posts[p][:html] = Kramdown::Document.new(posts[p][:markdown],options={syntax_highlighter: :pygments}).to_html
     posts[p][:paragraph] = Loofah.document(posts[p][:html]).scrub!(scrubparagraph).scrub!(:strip).to_text.gsub(/\n/,'  ').strip.gsub(/([^.”"])  ([A-Za-z])/, '\1 \2')
     posts[p][:sentences] = posts[p][:paragraph].split(/(?<=\.)   *(?=\w)|(?<=\.[”"])   *(?=\w)/)
