@@ -20,8 +20,8 @@ print any arbitrary JSON using the [Python module `json.tool`][json].
 python -m json.tool < compact.json > pretty.json
 {% endhighlight %}
 
-If writing a cli utility which exports JSON via `json.dump` it may be useful to
-offer users a `--pretty-json` option.  To replicate `json.dumps` like
+If writing a CLI utility which exports JSON via `json.dump`, then it may be
+useful to offer users a `--pretty-json` option.  To replicate `json.dumps` like
 `json.tool` the following can be printed to stdout.
 
 {% highlight python %}
