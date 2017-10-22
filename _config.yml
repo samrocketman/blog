@@ -5,7 +5,7 @@ url: http://sam.gleske.net/blog
 twitter_handle: sag47
 
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 comments :
   provider: disqus
   disqus:
