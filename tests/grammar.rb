@@ -28,10 +28,18 @@ scrubparagraph = ScrubParagraph.new
 
 #read all posts and break them down into different formats
 posts = Hash.new
+filepaths = Hash.new
 if ARGV.size > 0 then
-  filenames = ARGV.map { |x| (x.sub '_posts/', '').strip }
+  filepaths
+  filenames = ARGV.map do |x|
+    fname = (x.sub '_posts/|_drafts/', '').strip
+    filepaths[fname] = x
+  end
 else
   filenames = Dir.entries('_posts')
+  filenames.each do |f|
+    filepaths[f] = "_posts/#{f}"
+  end
 end
 filenames.select! { |x| x.end_with? '.md' }
 filenames.each do |p|
@@ -39,7 +47,7 @@ filenames.each do |p|
     if not posts[p] then
       posts[p] = Hash.new
     end
-    posts[p][:raw] = IO.read("_posts/#{p}").strip
+    posts[p][:raw] = IO.read(filepaths[p]).strip
     posts[p][:yaml] = posts[p][:raw].split('---')[1]
     posts[p][:markdown] = posts[p][:raw].split('---')[2].split("\n").map { |line| line.gsub(/(`[^`]+`)/, 'command') }.join("\n")
     posts[p][:html] = Kramdown::Document.new(posts[p][:markdown],options={syntax_highlighter: :pygments}).to_html
