@@ -12,6 +12,7 @@ pre code {
   overflow: auto;
   word-wrap: normal;
   word-break: break-all;
+  font-size: 12pt;
 }
 
 /*
