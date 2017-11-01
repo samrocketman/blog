@@ -49,3 +49,6 @@ h6 {
     color: #999;
     font-style: italic;
 }
+div#content, ul li {
+  font-size: 12pt;
+}
