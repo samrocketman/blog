@@ -19,6 +19,9 @@
 - slug: job-dsl-plugin
   name: Job DSL Plugin
 
+- slug: linux
+  name: Linux
+
 - slug: open-source
   name: Open Source
 
