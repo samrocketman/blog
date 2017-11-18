@@ -14,3 +14,5 @@ command - The person leading the charge on fixing the problem\.
 Runs tests and gathers feedback when requested by the command or command\.
 command - Keeps minute notes for ongoing events and tags a timestamp with each event so that a timeline of events is documented\.
 OpenMW \(a\.k\.a\. Open Morrowind\) is a project that aims to make Morrowind multi-platform\.
+command redirection   man command   GNU command manual   man command   man command
+command is a simple utility for adding infrastructure tests.
