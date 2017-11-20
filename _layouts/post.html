@@ -45,6 +45,8 @@ layout: default
   {% else %}
     {% assign tags_content = '' %}
   {% endif %}
+  <hr />
+  <p id="post-updated">This article was <a href="{{ site.github }}/commits/{{ site.github_branch }}/{{ page.path }}">last updated</a> {{ site.data.updated[page.path] }}.</p>
 
   <p id="post-meta">Posted {{ category_content }}{{ tags_content }}</p>
   <p></p>
