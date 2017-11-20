@@ -22,8 +22,8 @@
         <a class="brand" href="{{ site.url }}/">{{ site.name }} - {{ site.description }}</a>
         <ul class="nav">
           <li><a href="{{ site.url }}/archive.html">Archive</a></li>
-          <li><a href="https://github.com/samrocketman/blog/">Source</a></li>
-          <li><a href="http://sam.gleske.net/">Homepage</a></li>
+          <li><a href="{{ site.github }}">Source</a></li>
+          <li><a href="{{ site.homepage }}">Homepage</a></li>
           {% if site.env == 'production' %}
           <li style="padding-top: 15px;padding-left: 15px;width: 59px;height: 20px">
             <a href="https://twitter.com/{{ site.twitter_handle }}" id="twitter-top" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" style="margin-top: -15px;margin-left: -15px;width: 59px;">Follow</a>
@@ -44,7 +44,7 @@
     <div class="customize">
       <div class="row-fluid">
         <div class="span7 offset1">
-
+          <p>To subscribe to updates <a href="{{ site.github }}">watch my GitHub repository</a>.  New posts get added as pull requests.</p>
           {{content}}
         </div>
       </div>

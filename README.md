@@ -6,45 +6,47 @@ learn more about me then check out my [first post][post].
 
 # Features of my blog
 
-* Minimal as possible while still remaining useful.
-* Slightly [reddish/pink tint which is good for readers' eyes][flux].
-* Tags and categories.
-* Some social media buttons and Disqus comments for posts.
-* Three modes:
+- Minimal as possible while still remaining useful.
+- Slightly [reddish/pink tint which is good for readers' eyes][flux].
+- Tags and categories.
+- Some social media buttons and Disqus comments for posts.
+- Integrated with GitHub (via the `_config.yml` file).
+  - `make history` generates `_data/updated.yml` based in the git history of
+    when a post was last updated.
+  - Displays when a post was last updated and links to the history in GitHub
+    which serves as a changelog for tracking changes to individual posts.
+- Three modes:
   1. development - social media buttons and comments removed.  All URLs point to
      localhost.
   2. simulated production - Just like production but all URLs point to
     localhost.  Good to check out just before publishing.
   3. production - The live site.
+- Post authoriship is integrated with GPG validation.  This way posts by the
+  author can be cryptographically verified.
 
 # Getting started with development
 
 #### Prerequisites
 
-* OS: Ubuntu GNU/Linux
-* Node.js 5
-* Ruby 2.4
+- OS: Ubuntu GNU/Linux
+- Ruby 2.4
 
 If you're using a Mac, then building the blog won't work.  It's due to
 differences in the BSD toolset vs the GNU toolset.
 
-The blog requires Node.js 5 and Ruby 2.2 to be installed.  It's best to use
-[nvm][nvm] for Node and [rvm][rvm] for Ruby.
+The blog requires Ruby 2.2 to be installed.  It's best to use [rvm][rvm] for
+Ruby.
 
-Set up Node using `nvm`.
-
-    nvm install v5.0.0
-
-Set up `rvm`.
+Set up with `rvm`.
 
     rvm install 2.4
     #optionally install within a "blog" gemset
     rvm use 2.4@blog --create
 
-Now when you open a new terminal be sure to execute the following commands
-before modifying the blog.
+If you encounter an error about not being in a login shell then use `bash -l` to
+create one.  Now when you open a new terminal be sure to execute the following
+commands before modifying the blog.
 
-    nvm install v5.0.0
     rvm use 2.4@blog
 
 #### Install dependencies
@@ -52,15 +54,15 @@ before modifying the blog.
 I have provided a handy `Makefile` to aid with development.  Here's a summary of
 a few `make` commands I've provided for myself.
 
-* `make deps` - will bundle install dependencies.  I assume you're working in a
+- `make deps` - will bundle install dependencies.  I assume you're working in a
   managed ruby environment such as [rvm][rvm].  This should be the first command
   you run before any other.
-* `make` - will start the Jekyll server environment and website in "development
+- `make` - will start the Jekyll server environment and website in "development
   mode."  This does three things:
   1. Removes distracting comments and social media buttons.
   2. Displays posts from the `_drafts/` folder.
   3. Displays unpublished posts.
-* `make prod` - will start the Jekyll server environment and website in a
+- `make prod` - will start the Jekyll server environment and website in a
   simulated "production mode."  This starts the website with all of the
   addresses pointing at a local `site.url`.  It basically brings back the social
   media buttons and comments but allows you to browse the site locally.
@@ -95,10 +97,10 @@ Sign a commit:
 All source code is MIT Licensed by [LICENSE.txt](LICENSE.txt) with exception
 for:
 
-* All content under `_posts/` and `images/` is licensed under [Creative Commons
+- All content under `_posts/` and `images/` is licensed under [Creative Commons
   Attribution-NonCommercial-ShareAlike 4.0 International][cc] and is governed by
   the contents of [LICENSE.txt](LICENSE.txt).
-* Any content governed by 3rd parties which is covered by copyrights, licenses,
+- Any content governed by 3rd parties which is covered by copyrights, licenses,
   and notices outlined in the [`3rd_party/`](3rd_party) folder.
 
 [cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/
