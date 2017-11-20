@@ -3,7 +3,7 @@ export PS4='$ '
 export DEBIAN_FRONTEND=noninteractive
 if [ ! -d ".git" ]; then
   echo 'ERROR: must be run from the root of the repository.  e.g.'
-  echo './tests/signatures.sh'
+  echo './make/verify_signatures.sh'
   exit 1
 fi
 set -x

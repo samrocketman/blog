@@ -42,6 +42,14 @@ else
   end
 end
 filenames.select! { |x| x.end_with? '.md' }
+
+kramdown_options = {
+  input: :GFM,
+  html_to_native: true,
+  hard_wrap: false,
+  syntax_highlighter: :rouge
+}
+
 filenames.each do |p|
   if p.end_with? '.md' then
     if not posts[p] then
@@ -50,7 +58,7 @@ filenames.each do |p|
     posts[p][:raw] = IO.read(filepaths[p]).strip
     posts[p][:yaml] = posts[p][:raw].split('---')[1]
     posts[p][:markdown] = posts[p][:raw].split('---')[2].split("\n").map { |line| line.gsub(/(`[^`]+`)/, 'command') }.join("\n")
-    posts[p][:html] = Kramdown::Document.new(posts[p][:markdown],options={syntax_highlighter: :pygments}).to_html
+    posts[p][:html] = Kramdown::Document.new(posts[p][:markdown], options=kramdown_options).to_html
     posts[p][:paragraph] = Loofah.document(posts[p][:html]).scrub!(scrubparagraph).scrub!(:strip).to_text.gsub(/\n/,'  ').strip.gsub(/([^.”"])  ([A-Za-z])/, '\1 \2')
     posts[p][:sentences] = posts[p][:paragraph].split(/(?<=\.)   *(?=\w)|(?<=\.[”"])   *(?=\w)/)
   end

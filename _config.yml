@@ -10,7 +10,11 @@ twitter_handle: sag47
 timezone: America/Los_Angeles
 
 markdown: kramdown
-highlighter: rouge
+kramdown:
+  input: GFM
+  html_to_native: true
+  hard_wrap: false
+  syntax_highlighter: rouge
 comments :
   provider: disqus
   disqus:

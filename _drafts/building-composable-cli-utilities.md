@@ -33,7 +33,7 @@ with other programs.
 
 Here's an example of each component being used in a shell script:
 
-{% highlight bash %}
+```bash
 # Read stdin for user or program input
 read -sp 'Password:' USER_PASSWORD
 
@@ -45,11 +45,11 @@ echo "See you later world" 1>&2
 
 # Exiting with an exit code of 3
 exit 3
-{% endhighlight %}
+```
 
 Here's an example of each component being used in a Python script:
 
-{% highlight python %}
+```python
 import sys
 
 # Read stdin for JSON blob
@@ -63,7 +63,7 @@ print >> sys.stderr, 'See you later world'
 
 # Exiting with an exit code of 3
 sys.exit(3)
-{% endhighlight %}
+```
 
 # What is a composable CLI utility?
 
@@ -72,9 +72,9 @@ order to make a more complex program.  For example, take the following one
 liner which reads a file for specific lines and then alphabetically sorts the
 output.
 
-{% highlight bash %}
+```bash
 grep '^g' file.txt | sort
-{% endhighlight %}
+```
 
 `grep` is outputting to stdout and `sort` is reading `grep` output on stdin.
 `grep` and `sort` are what I would call composable utilities.  In a shell
@@ -101,7 +101,7 @@ conventions.
 It makes sense to write wrapper methods around these concepts.  Here's some
 example wrapper methods in bash.
 
-{% highlight bash %}
+```bash
 # output to stdout so other programs can process the output
 function programOutput() {
   echo "$@"
@@ -127,11 +127,11 @@ function exitFailed() {
   # by default exits with 1 but can specify a custom exit code
   exit "${1:-1}"
 }
-{% endhighlight %}
+```
 
-Here's a python example which includes wrapper methods for these concepts.
+Here's a python example, which includes wrapper methods for these concepts.
 
-{% highlight python %}
+```python
 import sys
 
 # output to stdout so other programs can process the output
@@ -155,12 +155,12 @@ def exitSuccess():
 def exitFailed(code=1):
     # by default exits with 1 but can specify a custom exit code
     sys.exit(code)
-{% endhighlight %}
+```
 
-Some of the names are exagerated but it's to illustrate the point.  For example,
-for printing to stdout I would probably just use `echo` in Bash.  In Python, I
-would just use `print` or `printf` for printing to stdout.  However, the primary
-purpose here is to elaborate for better understanding.
+Some of the names are exaggerated, but it's to illustrate the point.  For
+example, for printing to stdout I would probably just use `echo` in Bash.  In
+Python, I would just use `print` or `printf` for printing to stdout.  However,
+the primary purpose here is to elaborate for better understanding.
 
 Hopefully, your own scripts will level up and become a library of composable CLI
 utilities.  It is good for a CLI utility when reuse in shell scripts is part of

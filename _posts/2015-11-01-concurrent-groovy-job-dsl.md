@@ -114,7 +114,7 @@ accomplishing two things: spawning a thread and joining it.  What is interesting
 is that threads in Groovy can be spawned and started by passing
 [closures][closures].  For example:
 
-{% highlight groovy %}
+```groovy
 //serially executed code
 Thread thread = Thread.start {
     //concurrently executed code
@@ -124,7 +124,7 @@ Thread thread = Thread.start {
 
 //pause program and wait for thread to finish before continuing program
 thread.join()
-{% endhighlight %}
+```
 
 Because we can pass closures to start threads this means threading in Groovy is
 pretty easy!
@@ -138,7 +138,7 @@ thread lock with a Thread.  It is making use of a few advanced Groovy concepts:
 [calling closures][closures] and modifying an imported class during runtime
 using [metaprogramming][meta].  Here's our thread lock:
 
-{% highlight groovy %}
+```groovy
 import java.util.concurrent.locks.ReentrantLock
 //create a lock for use in threads
 ReentrantLock.metaClass.withLock = {
@@ -151,7 +151,7 @@ ReentrantLock.metaClass.withLock = {
     }
 }
 def lock = new ReentrantLock()
-{% endhighlight %}
+```
 
 Threads can make use of `lock.withLock {}` by protecting sections of code and
 forcing it to serially execute amongst all threads.
@@ -161,7 +161,7 @@ forcing it to serially execute amongst all threads.
 Now that I know how to start a thread and know how to implement a thread lock
 let's combine the two concepts.
 
-{% highlight groovy %}
+```groovy
 import java.util.concurrent.locks.ReentrantLock
 
 //create a lock for use in threads
@@ -188,7 +188,7 @@ Thread thread = Thread.start {
 
 //wait for thread to finish before program continues
 thread.join()
-{% endhighlight %}
+```
 
 In this case, the closure is the `{}` argument following `lock.withLock`.  It is
 executed using the `it()` method in the `metaClass.withLock` method definition.
@@ -202,7 +202,7 @@ than one thread doesn't modify the shared memory by forcing it to run serially.
 Based on the above information I decided the easiest way to work with multiple
 threads is to use a `List` of threads.  That basically looks like the following.
 
-{% highlight groovy %}
+```groovy
 //Let's say we have a list of tasks to be run
 List<Thread> threads = []
 
@@ -217,7 +217,7 @@ tasks.each {
 threads.each {
     it.join()
 }
-{% endhighlight %}
+```
 
 I created a `List` containing every thread.  This means I needed to append an
 instance of each thread to the `threads` List.  When I wanted to pause the
@@ -242,10 +242,10 @@ Therefore:
 ##### Serial Job DSL script
 
 Our goal is to create one thread per branch and then join the threads before
-exiting the Job DSL script.  In pseudo code, our program looks like the
+exiting the Job DSL script.  In pseudocode, our program looks like the
 following.
 
-{% highlight groovy %}
+```groovy
 //get branches
 def project = 'github_org/github_project'
 def branches = GitHub.branches(project)
@@ -261,14 +261,14 @@ branches.each { branch ->
     //generate Jenkins job based on the contents
     jenkins.generatJob(contents)
 }
-{% endhighlight %}
+```
 
 ##### Concurrent Job DSL script
 
-I used the threading concepts and solved the problem with the following pseudo
-code.
+I used the threading concepts and solved the problem with the following
+pseudocode.
 
-{% highlight groovy %}
+```groovy
 import java.util.concurrent.locks.ReentrantLock
 
 //create a lock for use in threads
@@ -314,9 +314,9 @@ branches.each { branch ->
 threads.each {
     it.join()
 }
-{% endhighlight %}
+```
 
-Don't like pseudo code?  Here's [the real code][jervis-threading].
+Don't like pseudocode?  Here's [the real code][jervis-threading].
 
 # Conclusion
 
