@@ -28,23 +28,26 @@
 - slug: osx
   name: Mac OS X
 
-- slug: programming
-  name: Programming
-
-- slug: security
-  name: Security
-
-- slug: slice-of-life
-  name: Slice of Life
-
-- slug: wine
-  name: WINE
-
 - slug: process
   name: Process
+
+- slug: programming
+  name: Programming
 
 - slug: python
   name: Python
 
+- slug: security
+  name: Security
+
+- slug: shell
+  name: Bash
+
+- slug: slice-of-life
+  name: Slice of Life
+
 - slug: tips
   name: Tips
+
+- slug: wine
+  name: WINE

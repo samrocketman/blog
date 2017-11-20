@@ -10,7 +10,7 @@ fi
 #only test posts if they have been modified since origin/gh-pages
 
 merge_base="$(git merge-base HEAD origin/gh-pages)"
-posts="$(git diff --name-status $merge_base HEAD | awk '$0 ~ /_posts\/.*\.md$/ {print $2}' | tr '\n' ' ' | sed 's/ $/\n/')"
+posts="$(git diff --name-status $merge_base HEAD | awk '$0 ~ /(_posts|_drafts)\/.*\.md$/ {print $2}' | tr '\n' ' ' | sed 's/ $/\n/')"
 
 if [ -n "${posts}" ]; then
   bundle exec ruby ./tests/grammar.rb ${posts}

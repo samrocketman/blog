@@ -21,3 +21,5 @@ which support diverse development needs across multiple platforms
 I have implemented continuous integration and continuous delivery solutions for multiple companies.
 The GitHub Pull Request Builder Jenkins Plugin - it is used by Jenkins to validate pull requests as part of automated peer review and continuous integration.
 It was running Windows 3.1 on top of DOS and to get the graphical environment you would type command after booting up.
+command and command are what I would call composable utilities.
+When a program has an option to read a file, ensure that file can also be read from command.
