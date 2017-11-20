@@ -10,7 +10,7 @@ learn more about me then check out my [first post][post].
 - Slightly [reddish/pink tint which is good for readers' eyes][flux].
 - Tags and categories.
 - Some social media buttons and Disqus comments for posts.
-- Integrated with GitHub (via the `_config.yml` file).
+- Integrated with GitHub (via the [`_config.yml`][c] file).
   - `make history` generates `_data/updated.yml` based in the git history of
     when a post was last updated.
   - Displays when a post was last updated and links to the history in GitHub
@@ -23,6 +23,7 @@ learn more about me then check out my [first post][post].
   3. production - The live site.
 - Post authoriship is integrated with GPG validation.  This way posts by the
   author can be cryptographically verified.
+- Integrated with [keybase.io][kb.io] (via the [`_config.yml`][c] file).
 
 # Getting started with development
 
@@ -103,10 +104,12 @@ for:
 - Any content governed by 3rd parties which is covered by copyrights, licenses,
   and notices outlined in the [`3rd_party/`](3rd_party) folder.
 
+[c]: _config.yml
 [cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 [ci]: https://travis-ci.org/samrocketman/blog
 [ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
 [flux]: https://justgetflux.com/research.html
+[kb.io]: https://keybase.io/
 [nvm]: https://github.com/creationix/nvm
 [post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [rvm]: https://rvm.io/

@@ -53,7 +53,13 @@
     <!-- Footer  ==================================== -->
     <footer class="footer">
       <div class="container">
+        {% if site.keybase_user %}
+        <p>
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"><img src="https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png" alt="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" /></a>
+          All original content by <a href="https://keybase.io/{{ site.keybase_user }}/">{{ site.name }}</a>.</p>
+        {% else %}
         <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"><img src="https://licensebuttons.net/l/by-nc-sa/3.0/88x31.png" alt="Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International" /></a> All original content by {{ site.name }}.</p>
+        {% endif %}
         <p><a href="http://twitter.com/{{ site.twitter_handle }}/">twitter.com/{{ site.twitter_handle }}</a></p>
         <p><a href="{{ site.url }}/feed.xml" title="RSS feed of posts">RSS feed of blog posts</a></p>
       </div>

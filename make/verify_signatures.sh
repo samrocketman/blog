@@ -15,12 +15,15 @@ set -e
 keyfile=$(mktemp --suffix=.gpg)
 
 GPG="gpg --no-default-keyring --keyring ${keyfile}"
+keybase_user="$(bundle exec ruby ./make/get_yaml_key.rb keybase_user)"
+keybase_key="$(bundle exec ruby ./make/get_yaml_key.rb keybase_key)"
+keybase_url="https://keybase.io/${keybase_user}/pgp_keys.asc?fingerprint=${keybase_key}"
 
-curl -sL 'https://keybase.io/samrocketman/key.asc' | ${GPG} --import
+curl -sL "${keybase_url}" | ${GPG} --import
 
 #fully trust public key 7257E65F
 ${GPG} --import-ownertrust <<EOF
-8D8BF0E242D8A068572EBF3CE8F732347257E65F:6:
+${keybase_key}:6:
 EOF
 
 echo 'Verifying post signatures.'
