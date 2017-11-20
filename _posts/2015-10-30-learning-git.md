@@ -36,11 +36,11 @@ then you'll find it more difficult when tackling advanced topics.
 Use Git as often as you can.  Any time you're working with plain text files you
 should make use of Git as a habit.  It's real easy to simply:
 
-{% highlight bash %}
+```bash
 git init
 git add -A
 git commit -m 'initial commit'
-{% endhighlight %}
+```
 
 Then as you work on your project, regularly commit your changes by making use of
 `git add` and `git commit`.
@@ -112,19 +112,19 @@ you're working with.  Primarily because the person providing the help is using
 options that aren't available in your (likely older) version.  Here's some
 examples of how to read documentation from the terminal.
 
-{% highlight bash %}
+```bash
 git help
 git help push
 git help clone
-{% endhighlight %}
+```
 
 You can also access those same man pages using the `man` command and prefixing
 each help page with `git-`.  For example,
 
-{% highlight bash %}
+```bash
 man git-push
 man git-clone
-{% endhighlight %}
+```
 
 Nearly every command you _could use_ with git has an associated man page.  Take
 advantage of that!  `man` is used to read manuals and `apropose` is used to
@@ -132,14 +132,14 @@ search them.  If you've not learned how to read man pages before then Internet
 search, "how to read man pages."
 
 I enjoy taking man pages and reading them on my ebook reader.  I [wrote a
-script][man2pdf] which converts man pages to PDF for portable reading.  Here's
-a few examples of taking a Git manual pages and converting them to PDF.
+script][man2pdf] which converts man pages to PDF for portable reading.  Here's a
+few examples of taking a Git manual page and converting it to PDF.
 
-{% highlight bash %}
+```bash
 ./man2pdf git-push
 ./man2pdf git-clone
 ./man2pdf git-config
-{% endhighlight %}
+```
 
 # Teach Git
 

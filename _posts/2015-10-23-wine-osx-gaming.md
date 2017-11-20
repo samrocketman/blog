@@ -58,16 +58,16 @@ route by using `homebrew`, `winetricks list-all`, and `winetricks dlls list`.
 This allowed me to easily install all required prerequisites for the game with
 little effort.
 
-One of the great things about the `homebrew` version of `wine` is that I can
-build the latest development branch from source.  The development branch is
-usually pretty stable and you get the latest and greatest changes.  I discovered
-that by doing `homebrew info wine`.
+One of the great things about the `homebrew` version of `wine`, I can build the
+latest development branch from source.  The development branch is usually pretty
+stable and you get the latest and greatest changes.  I discovered that by
+executing `homebrew info wine`.
 
 **Warning: when installing via winetricks careful not to touch your keyboard
 until winetricks pauses with an installer dialog.  I've accidentally closed
 installers.**
 
-{% highlight bash %}
+```bash
 brew install wine --HEAD
 brew install winetricks
 winetricks corefonts
@@ -75,15 +75,15 @@ winetricks dlls msasn1
 for x in d3dx9_43 d3dx10 d3dx11_43; do winetricks $x; done
 for x in vcrun6sp6 vcrun2003 vcrun2005 vcrun2008 vcrun2010 vcrun2012 vcrun2013; do winetricks $x; done
 for x in dotnet30sp1 quartz msxml3 dxdiag physx; do winetricks $x; done
-{% endhighlight %}
+```
 
 That installed the base prerequisites for Fallout (as well as a few other extras
 which are used by other games I play).  Now to configure WINE.
 
-{% highlight bash %}
+```bash
 winetricks winxp
 winecfg
-{% endhighlight %}
+```
 
 Once inside of `winecfg`, configure the _Graphics_ tab and enable "Automatically
 capture the mouse in full-screen windows".
@@ -134,16 +134,16 @@ Notes:
 Now we're ready to install Steam.  _Note: don't automatically launch Steam when
 the install is finished._
 
-{% highlight bash %}
+```bash
 winetricks steam
-{% endhighlight %}
+```
 
 Start Steam and install Fallout 3 GOTY Edition and S.T.A.L.K.E.R.: Call of
 Pripyat.  You can start Steam with the following command from the terminal.
 
-{% highlight bash %}
+```bash
 wine 'C:\\Program Files\\Steam\\Steam.exe'
-{% endhighlight %}
+```
 
 After Fallout is installed, don't forget to enable all of the optional DLC (from
 the Fallout Launcher visit DATA FILES and enable them).  Occasionally, there are
@@ -170,10 +170,10 @@ files in `~/Documents/My Games/Fallout3`.
 
 Apply the [`FALLOUT.INI` patch][fallout-ini.patch] with the following commands.
 
-{% highlight bash %}
+```bash
 cd "~/Documents/My Games/Fallout3"
 curl -L "http://bit.ly/1WaaDQf" | patch
-{% endhighlight %}
+```
 
 ###### Known issues
 

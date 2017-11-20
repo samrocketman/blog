@@ -15,7 +15,7 @@ type: markdown
 `goss` is a simple utility for adding infrastructure tests.  It is easy to use
 even for the most pedestrian of test writers.  Some example usage includes:
 
-{% highlight bash %}
+```bash
 $ goss add user jenkins
 Adding User to './goss.yaml':
 
@@ -34,7 +34,7 @@ $ goss validate
 
 Total Duration: 0.003s
 Count: 6, Failed: 0, Skipped: 0
-{% endhighlight %}
+```
 
 [Learn more about `goss`][goss] or [download it][dl].
 
@@ -64,7 +64,7 @@ going to explain them much, but I will link to some documentation if you want to
 study them.  Keep in mind, I am already in my test environment with my RPM
 package installed before running these commands.
 
-{% highlight bash %}
+```bash
 goss add package jenkins-bootstrap
 
 goss add service jenkins
@@ -78,7 +78,7 @@ rpm -q --filesbypkg jenkins-bootstrap | awk '$2 ~ "init.groovy.d" { print $2 }' 
 find /var/lib/jenkins | xargs -n1 goss add file
 
 goss validate
-{% endhighlight %}
+```
 
 With the above command `goss validate` checks 100 tests.  For my package
 installs, I only wanted to check certain parts of my installed software (like

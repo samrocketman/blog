@@ -1,4 +1,4 @@
-.PHONY: deps history prod serve test
+.PHONY: deps history prod serve sign test
 
 serve:
 	bundle exec jekyll serve --watch --config _config.yml,_config_local.yml,_config_dev.yml --drafts --unpublished
@@ -11,9 +11,12 @@ deps:
 
 test: history
 	git diff --exit-code
-	./tests/signatures.sh
+	./make/verify_signatures.sh
 	bundle exec jekyll build
-	./tests/test_grammar_based_on_commit.sh
+	./make/test_grammar_based_on_commit.sh
 
 history:
-	ruby ./tests/update_post_history.rb
+	bundle exec ruby ./make/update_post_history.rb
+
+sign:
+	./make/gpg_sign_posts.sh

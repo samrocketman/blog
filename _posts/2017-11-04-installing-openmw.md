@@ -62,12 +62,12 @@ Purchase and download the [GOG.com version of Morrowind][gog].  On my computer,
 it downloaded to `~/Downloads/setup_tes_morrowind_goty_2.0.0.7.exe`.  Use
 `innoextract` to access the game files from the installer.
 
-{% highlight bash %}
+```bash
 sudo apt-get install innoextract
 mkdir -p ~/usr/games/morrowind
 cd ~/usr/games/morrowind
 innoextract ~/Downloads/setup_tes_morrowind_goty_2.0.0.7.exe
-{% endhighlight %}
+```
 
 Open the _OpenMW Launcher_, it will prompt you to go through a wizard to search
 for the game files.  The game files are located in

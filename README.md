@@ -47,7 +47,7 @@ If you encounter an error about not being in a login shell then use `bash -l` to
 create one.  Now when you open a new terminal be sure to execute the following
 commands before modifying the blog.
 
-    rvm use 2.4@blog
+    rvm use 2.4@blog --create
 
 #### Install dependencies
 
@@ -84,9 +84,9 @@ screen and the webpage on the other.
 
 # Tips for myself
 
-Sign a blog post:
+Sign any changed blog posts:
 
-    gpg -abs _posts/post.md
+    make sign
 
 Sign a commit:
 
