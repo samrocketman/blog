@@ -7,9 +7,9 @@ if [ ! -d ".git" ]; then
   exit 1
 fi
 
-#only test posts if they have been modified since origin/gh-pages
+#only test posts if they have been modified since origin/master
 
-merge_base="$(git merge-base HEAD origin/gh-pages)"
+merge_base="$(git merge-base HEAD origin/master)"
 posts="$(git diff --name-status $merge_base HEAD | awk '$0 ~ /(_posts|_drafts)\/.*\.md$/ {print $2}' | tr '\n' ' ' | sed 's/ $/\n/')"
 
 if [ -n "${posts}" ]; then

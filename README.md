@@ -110,4 +110,4 @@ for:
 [nvm]: https://github.com/creationix/nvm
 [post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [rvm]: https://rvm.io/
-[stat]: https://travis-ci.org/samrocketman/blog.svg?branch=gh-pages
+[stat]: https://travis-ci.org/samrocketman/blog.svg?branch=master
