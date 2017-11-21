@@ -4,13 +4,29 @@ The following notices describe how code from 3rd parties was re-used.
 
 ================================================================================
 
+The following was integrated by Sam Gleske from 3rd parties:
 
-Original theme from:
-https://github.com/mojombo/mojombo.github.io
+    Original theme from:
+    https://github.com/mojombo/mojombo.github.io
 
-Site theme forked from:
-https://github.com/joearms/joearms.github.com
+    Site theme forked from:
+    https://github.com/joearms/joearms.github.com
 
-Categories and tags implementation from:
-https://github.com/minddust/minddust.github.io
-http://www.minddust.com/post/tags-and-categories-on-github-pages/
+    Categories and tags implementation from:
+    https://github.com/minddust/minddust.github.io
+    http://www.minddust.com/post/tags-and-categories-on-github-pages/
+
+Sam Gleske implemented the following additional components for this blog:
+
+- Makefile integration for performing complex tasks with simple make commands.
+- CI / CD integration.  e.g. site building, grammar checking, gpg sig checking,
+  history checking.
+- Added last updated links for blog posts.
+- Timezone for blog posts which tracks last updated in the author's local time
+  zone.
+- Added support for writing blog posts in GitHub Flavored Markdown.
+- Added the following social integrations:
+  - Disqus
+  - GitHub
+  - Keybase.io
+  - Twitter

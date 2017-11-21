@@ -7,23 +7,56 @@ learn more about me then check out my [first post][post].
 # Features of my blog
 
 - Minimal as possible while still remaining useful.
+- Easy to copy and make your own.  All author settings for customizing this blog
+  is stored in [`_config.yml`][c].
+- Write blog posts in [GitHub flavored markdown][gfm].
 - Slightly [reddish/pink tint which is good for readers' eyes][flux].
 - Tags and categories.
-- Some social media buttons and Disqus comments for posts.
-- Integrated with GitHub (via the [`_config.yml`][c] file).
-  - `make history` generates `_data/updated.yml` based in the git history of
-    when a post was last updated.
-  - Displays when a post was last updated and links to the history in GitHub
-    which serves as a changelog for tracking changes to individual posts.
+- Integrated with some social media:
+  - Disqus (for comments)
+  - GitHub (for post history)
+  - Keybase.io (links and hosting GPG keys for automated peer review)
+  - Twitter (post sharing)
+- Automated peer review available from 3rd parties by using `make test`.  It
+  validates Grammar, GPG signatures, and even building the site.  This site uses
+  [GitHub pull requests][pr] and Travis CI for automated peer review when
+  publishing new blog posts.
 - Three modes:
   1. development - social media buttons and comments removed.  All URLs point to
      localhost.
   2. simulated production - Just like production but all URLs point to
     localhost.  Good to check out just before publishing.
   3. production - The live site.
-- Post authoriship is integrated with GPG validation.  This way posts by the
-  author can be cryptographically verified.
-- Integrated with [keybase.io][kb.io] (via the [`_config.yml`][c] file).
+
+# Copy my blog and make it your own
+
+1. Fork or clone this blog.  I recommend you clone and copy so you get stats in
+   your GitHub profile.
+2. Remove all posts from `_posts` and `_drafts`.
+3. Customize `_config.yml` with your own information.
+4. Update `LICENSE.txt` and make it your own.
+4. Publish back to GitHub.
+
+```bash
+# Step 1
+git clone https://github.com/samrocketman/blog
+# Step 2
+rm _posts/*.md* _drafts/*.md
+# Step 3
+vim _config.yml
+# Step 4
+git remote add myblog git@github.com:<your_username>/<your_blog>.git
+git push myblog 'refs/heads/master:refs/heads/gh-pages'
+```
+
+> Note: `gh-pages` branch automatically gets published to GitHub pages.
+> However, if you'd rather be more like this blog publishing from `master` you
+> can customize the branch to master from the repository settings.
+
+Legal note: the `3rd_party/` directory must remain intact in order to satisfy
+license requirements of both work provided by myself and authors in which I
+built upon.  It contains all notices and licenses for using other peoples'
+source code.
 
 # Getting started with development
 
@@ -109,8 +142,10 @@ for:
 [ci]: https://travis-ci.org/samrocketman/blog
 [ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
 [flux]: https://justgetflux.com/research.html
+[gfm]: https://guides.github.com/features/mastering-markdown/
 [kb.io]: https://keybase.io/
 [nvm]: https://github.com/creationix/nvm
 [post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
+[pr]: https://github.com/samrocketman/blog/pulls?q=is%3Apr
 [rvm]: https://rvm.io/
 [stat]: https://travis-ci.org/samrocketman/blog.svg?branch=master
