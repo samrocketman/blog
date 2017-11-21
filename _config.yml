@@ -21,4 +21,17 @@ comments :
   provider: disqus
   disqus:
     short_name: samrocketmanblog
-exclude: [vendor]
+
+# This is a more advanced exclude for site building.
+# It prevents files from being copied to _site/.
+exclude:
+  - 3rd_party
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE.txt
+  - Makefile
+  - README.md
+  - grammar_ignore.dict
+  - grammar_skip.sentences
+  - make
+  - vendor
