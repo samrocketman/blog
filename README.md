@@ -17,15 +17,11 @@ learn more about me then check out my [first post][post].
   - GitHub (for post history)
   - Keybase.io (links and hosting GPG keys for automated peer review)
   - Twitter (post sharing)
-- Automated peer review available from 3rd parties by using `make test`.  It
-  validates Grammar, GPG signatures, and even building the site.  This site uses
-  [GitHub pull requests][pr] and Travis CI for automated peer review when
-  publishing new blog posts.
+- Automated peer review.
 - Three modes:
-  1. development - social media buttons and comments removed.  All URLs point to
-     localhost.
-  2. simulated production - Just like production but all URLs point to
-    localhost.  Good to check out just before publishing.
+  1. development - distractions like social media buttons and comments removed.
+  2. simulated production - Just like production but local.  Good to check out
+     before publishing when customizing style and layout.
   3. production - The live site.
 
 # Copy my blog and make it your own
@@ -68,7 +64,7 @@ source code.
 If you're using a Mac, then building the blog won't work.  It's due to
 differences in the BSD toolset vs the GNU toolset.
 
-The blog requires Ruby 2.2 to be installed.  It's best to use [rvm][rvm] for
+The blog requires Ruby 2.4 to be installed.  It's best to use [rvm][rvm] for
 Ruby.
 
 Set up with `rvm`.
@@ -83,38 +79,52 @@ commands before modifying the blog.
 
     rvm use 2.4@blog --create
 
-#### Install dependencies
+Install dependencies.
 
-I have provided a handy `Makefile` to aid with development.  Here's a summary of
-a few `make` commands I've provided for myself.
+    make deps
 
-- `make deps` - will bundle install dependencies.  I assume you're working in a
-  managed ruby environment such as [rvm][rvm].  This should be the first command
-  you run before any other.
-- `make` - will start the Jekyll server environment and website in "development
-  mode."  This does three things:
-  1. Removes distracting comments and social media buttons.
-  2. Displays posts from the `_drafts/` folder.
-  3. Displays unpublished posts.
-- `make prod` - will start the Jekyll server environment and website in a
-  simulated "production mode."  This starts the website with all of the
-  addresses pointing at a local `site.url`.  It basically brings back the social
-  media buttons and comments but allows you to browse the site locally.
+#### Developing the site
 
-I also have the [Greasemonkey Firefox Add-on][ff-gm] installed and use the
-following script.
+There a "make" commands which make developing this blog easier and performing
+more complex tasks.
 
-```javascript
-window.onload = function() {
-  window.scrollTo(0,document.body.scrollHeight);
-}
-setTimeout(function() {location.reload();}, 5000);
-```
+- `make` - Starts the website removing all distractions (development mode).
+- `make prod` - Starts a local copy of the website like it is meant to be viewed
+  in production (simulated production mode).
+- `make test` - Performs automated peer review and generates the live site in
+  the `_site/` directory (production mode).
 
-This will reload the page every 5 seconds and scroll to the bottom of the page.
-This is useful to see live page updates as I'm writing blog posts in
-"development mode."  It works best with dual monitors having the code on one
-screen and the webpage on the other.
+Other make commands:
+
+- `make history` - will generate data for your site which will be used for the
+  "last updated" links in blog posts.  This automatically gets run with `make
+  test` as well.
+- `make sign` - will GPG sign blog posts which have changed using your default
+  GPG private key.
+
+# Automated peer review
+
+What is it?  It performs common and repeatable tasks a person would normally do
+when checking this blog.  Rather than having to do it you're able to rely on
+computers to check it for you.
+
+What sort of tasks are performed in automated peer review for this blog?
+
+- Grammar and spelling checking.  It smartly checks posts which have changed
+  rather than everything.
+- GPG signature checking for blog posts to ensure you didn't miss signing your
+  content.
+- Builds the website for uploading to other sources.
+
+Automated peer review is useful to run before you even publish the website for
+readers to see.  I use [GitHub pull requests][pr] and Travis CI for automated
+peer review when publishing my new blog posts.
+
+> Note: Grammar and spell checking isn't perfect due to the technical nature of
+> my blog.  I have added `grammar_ignore.dict` for skipping keywords and
+> `grammar_skip.sentences` for skipping whole sentences when I'm writing.  It
+> doesn't always get it right but it still forces me to double check the
+> sentences it calls out.
 
 # Tips for myself
 
@@ -140,7 +150,6 @@ for:
 [c]: _config.yml
 [cc]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 [ci]: https://travis-ci.org/samrocketman/blog
-[ff-gm]: https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/
 [flux]: https://justgetflux.com/research.html
 [gfm]: https://guides.github.com/features/mastering-markdown/
 [kb.io]: https://keybase.io/
