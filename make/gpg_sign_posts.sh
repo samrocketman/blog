@@ -4,7 +4,8 @@
 
 set -e
 
-merge_base="$(git merge-base HEAD origin/master)"
+branch="$(bundle exec ruby ./make/get_yaml_key.rb github_branch)"
+merge_base="$(git merge-base HEAD origin/"${branch}")"
 git diff --name-status "${merge_base}" HEAD |
   awk '$0 ~ /_posts\/.*\.md$/ {print $2}' |
   xargs -n1 -- gpg -abs --yes
