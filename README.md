@@ -143,9 +143,9 @@ Sign a commit:
 All source code is MIT Licensed by [LICENSE.txt](LICENSE.txt) with exception
 for:
 
-- All content under `_posts/` and `images/` is licensed under [Creative Commons
-  Attribution-NonCommercial-ShareAlike 4.0 International][cc] and is governed by
-  the contents of [LICENSE.txt](LICENSE.txt).
+- All content under `_drafts/`, `_posts/`, and `images/` is licensed under
+  [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International][cc]
+  and is governed by the contents of [LICENSE.txt](LICENSE.txt).
 - Any content governed by 3rd parties which is covered by copyrights, licenses,
   and notices outlined in the [`3rd_party/`](3rd_party) folder.
 
