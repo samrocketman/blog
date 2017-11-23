@@ -47,8 +47,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ================================================================================
 ================================================================================
 
-All original content contained within the /_posts/ and /images/ folders relative
-to the root of this repository is governed by the following license.
+All original content contained within the /_drafts/, /_posts/, and /images/
+folders relative to the root of this repository is governed by the following
+license.
 
 ================================================================================
 
