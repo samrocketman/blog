@@ -28,7 +28,7 @@ A simple example is a Java library.  Your library is released to a hosting
 provider like [Sonatype Nexus][nexus].  By releasing from a tag you publish the
 binary only once and ship that binary through different environments of the
 testing process (dev, qa, stage, prod).  It is important to note that what lands
-in production is what was tested tag and that the full testing process be
+in production is what was tested.   I recommend the full testing process be
 performed on the Git tag (even duplicating the fast running tests run on a pull
 request).
 
