@@ -21,14 +21,16 @@ myself and this blog post is an elaboration on my reply.
 > Except what you deployed to prod wasn’t technically the thing that was tested
 > with that workflow (workflow problem and not tool problem)
 
-(i.e. even the same SHA256 hash artifact).
-Expanding on this.  I recommend that your final release pipeline be from a Git
-Java library.  Your library is released to a hosting provider like [Sonatype
-Nexus][nexus].  By releasing from a tag you publish the binary only once and ship that
-binary through different environments of the testing process (dev, qa, stage,
-duplicating the fast running tests run on a pull request).  Let's say you have a
-prod).  It is important to note that what lands in production is what was tested
-tag and that the full testing process be performed on the Git tag (even
+(i.e. even the same SHA256 hash artifact).  Expanding on this.  I recommend that
+your final release pipeline be from a Git tag.
+
+A simple example is a Java library.  Your library is released to a hosting
+provider like [Sonatype Nexus][nexus].  By releasing from a tag you publish the
+binary only once and ship that binary through different environments of the
+testing process (dev, qa, stage, prod).  It is important to note that what lands
+in production is what was tested tag and that the full testing process be
+performed on the Git tag (even duplicating the fast running tests run on a pull
+request).
 
 The same statement should apply to any "artifact" even if that "artifact" is a
 [Docker image][docker] or a whole machine (like an [AMI in Amazon AWS][ami] if
