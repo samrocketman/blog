@@ -47,7 +47,7 @@ mean by this.
 While some of the diagrams I'll share show Jenkins.  I'd like you to focus on
 the workflow itself since it is tool agnostic and is generally a decent workflow
 I developed to be in a CI as code system where CI code is stored in the repo of
-the code being build (like Travis CI, CircleCI, Jervis: Jenkins as a service,
+the code being built (like Travis CI, CircleCI, Jervis: Jenkins as a service,
 Jenkins multibranch pipelines, Jenkins X, etc <insert your favorite CI as code
 tool>).
 
