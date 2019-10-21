@@ -30,7 +30,7 @@ test: history
 	bundle exec jekyll build
 #	./make/test_grammar_based_on_commit.sh
 
-update-gemfile:
+update-gemfile: deps
 	\rm -f Gemfile.lock
 	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --rm -- ruby-blog \
 	bundle install --jobs=3 --retry=3
