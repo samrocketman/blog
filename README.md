@@ -134,6 +134,14 @@ Sign any changed blog posts:
 
     make sign
 
+Force re-signing all blog posts:
+
+    make sign FILES="$(echo _posts/*.md)"
+
+Force re-signing a specific blog post:
+
+    make sign FILES="_posts/somepost.md"
+
 Sign a commit:
 
     git commit -S
