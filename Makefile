@@ -50,4 +50,4 @@ promote:
 	mv ./_drafts/'$(DRAFT)' _posts/$(DATESTAMP)-$(DRAFT)
 
 sign:
-	./make/gpg_sign_posts.sh
+	./make/gpg_sign_posts.sh $(FILES)
