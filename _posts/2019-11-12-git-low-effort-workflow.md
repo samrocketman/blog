@@ -42,8 +42,8 @@ All of these workflows fall down one of these areas:
 
 ### Overcomplexity
 
-One could argue that known Git is part of a developer's job since it's a tool of
-their trade.  However, to apply this blanket statement to "all developers" is
+One could argue that knowing Git is part of a developer's job since it's a tool
+of their trade.  However, to apply this blanket statement to "all developers" is
 not only potentially descriminatory... it's also not realistic to expect all
 people to be the same level technically at any particular thing.
 
@@ -56,7 +56,10 @@ problem solve, the rest are left in the dark and tend to create a support burden
 because they need to fix a conflict resolution or some other thing which is
 supposed to happen automatically, doesn't.
 
-### How not to automatically release
+### How not to automatically release new versions
+
+Automatically managing version numbers and new releases with bumped numbers can
+be hard but not impossible.
 
 Automated releases tend to be where all of these workflows get into trouble,
 especially in highly parallelized systems interactions like between GitHub and
@@ -72,7 +75,7 @@ rolling back the version number.
 Since all workflows I mentioned don't cover how to automatically manage version
 numbers, it is left up to the implementor or developer to figure it out.  Some
 fall back to just baking the Git hash into their software releases because
-managing version numbers can be hard.
+managing version numbers has no immediately obvious solution that scales well.
 
 ### Compliance
 
