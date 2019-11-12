@@ -13,7 +13,7 @@ published: true
 type: markdown
 ---
 
-> See my updated post [Git Low Effort Workflow]({% link _posts/2019-11-12-git-low-effort-workflow.md %}) (GLEW for short).
+> See my updated post [Git Low Effort Workflow](http://sam.gleske.net/blog/engineering/2019/11/12/git-low-effort-workflow.html) (GLEW for short).
 
 This blog post is a response to a reddit user but reddit limited me to a 10,000
 character response.  As a compromise I decided to say everything I wanted to say
