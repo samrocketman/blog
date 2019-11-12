@@ -134,12 +134,12 @@ releases a version bumped tag.
 
 ![Diagram depicting developers contributing to the master
 branch and tag releases diverging from
-master]({% link assets/diagrams/glew/git_release_flow.png %})
+master](../../../../assets/diagrams/glew/git_release_flow.png)
 
 > **Figure 1.** Automated release flow for Git Low Effort Workflow explained in
 > 5 steps.
 
-#### <img src="{% link assets/diagrams/glew/1.png %}" style="height: 1.5em" alt="1." /> Developer opens pull request from feature branch
+#### <img src="../../../../assets/diagrams/glew/1.png" style="height: 1.5em" alt="1." /> Developer opens pull request from feature branch
 
 A developer opens a pull request with their code changes.  The pull request
 should only contain code changes for their minor feature and not change any
@@ -163,12 +163,12 @@ git checkout upstream/master -b myfeature
 git push origin -u myfeature
 ```
 
-#### <img src="{% link assets/diagrams/glew/2.png %}" style="height: 1.5em" alt="2." /> Automated checks pass and peer review occurs
+#### <img src="../../../../assets/diagrams/glew/2.png" style="height: 1.5em" alt="2." /> Automated checks pass and peer review occurs
 
 An automated system builds and runs tests.  Peers review code and give their
 thumgs up to approve the change to be merged.
 
-#### <img src="{% link assets/diagrams/glew/3.png %}" style="height: 1.5em" alt="3." /> Automated version bumping upon merge to master
+#### <img src="../../../../assets/diagrams/glew/3.png" style="height: 1.5em" alt="3." /> Automated version bumping upon merge to master
 
 > **Pro tip:** Git tags can diverge from branches just like branches can diverge
 > from other branches.
@@ -191,7 +191,7 @@ searches for all tags which match `1.0.[0-9]+`.  It takes the highest numbered
 tag and increments by `1`.  In this case, because no releases have occurred,
 yet, version bump and Git tag `1.0.1` is released.
 
-#### <img src="{% link assets/diagrams/glew/4.png %}" style="height: 1.5em" alt="4." /> Release and deployment flow occurs from Git tag
+#### <img src="../../../../assets/diagrams/glew/4.png" style="height: 1.5em" alt="4." /> Release and deployment flow occurs from Git tag
 
 GitHub fires webhooks when branches and tags are pushed.  An automated system
 should receive a webhook when `1.0.1` tag is pushed to the repository.  It
@@ -202,7 +202,7 @@ things such as:
 - Promote the released artifact through different environments (dev, stage,
   prod).
 
-#### <img src="{% link assets/diagrams/glew/5.png %}" style="height: 1.5em" alt="5." /> Second automatic release from  version bump
+#### <img src="../../../../assets/diagrams/glew/5.png" style="height: 1.5em" alt="5." /> Second automatic release from  version bump
 
 Let's say a developer goes through the same process again (pull request, review,
 merge, etc.).  The next time a merge to `master` occurs the automated system
@@ -220,21 +220,21 @@ you must create a release from the prior stable `1.0.1` without including
 changes from unstable `1.0.2`.
 
 ![Diagram depicts how to create a hotfix release from a prior stable
-release]({% link assets/diagrams/glew/git_create_hotfix_branch.png %})
+release](../../../../assets/diagrams/glew/git_create_hotfix_branch.png)
 
 > **Figure 2.** Create a hotfix branch from a prior stable release.
 
-#### <img src="{% link assets/diagrams/glew/1.png %}" style="height: 1.5em" alt="1." /> Git tag 1.0.1 is deployed but needs a hotfix
+#### <img src="../../../../assets/diagrams/glew/1.png" style="height: 1.5em" alt="1." /> Git tag 1.0.1 is deployed but needs a hotfix
 
 `1.0.1` is currently deployed to production.  A critical issue is discovered and
 must be fixed immediately.
 
-#### <img src="{% link assets/diagrams/glew/2.png %}" style="height: 1.5em" alt="2." /> A developer has released an unstable feature
+#### <img src="../../../../assets/diagrams/glew/2.png" style="height: 1.5em" alt="2." /> A developer has released an unstable feature
 
 Let's face it, sometimes all the checks can pass and everything looks good until
 you realize a change is critically broken and can't reach production.
 
-#### <img src="{% link assets/diagrams/glew/3.png %}" style="height: 1.5em" alt="3." /> A merge to master releases unstable 1.0.2
+#### <img src="../../../../assets/diagrams/glew/3.png" style="height: 1.5em" alt="3." /> A merge to master releases unstable 1.0.2
 
 The automated version bumping system releases `1.0.2` from master.
 
@@ -244,7 +244,7 @@ Fortunately, it didn't break production because it wasn't promoted.
 
 However, `1.0.1` must be hotfixed immediately to meet a customer SLA.
 
-#### <img src="{% link assets/diagrams/glew/4.png %}" style="height: 1.5em" alt="4." /> Create a hotfix branch from release 1.0.1
+#### <img src="../../../../assets/diagrams/glew/4.png" style="height: 1.5em" alt="4." /> Create a hotfix branch from release 1.0.1
 
 > **Pro tip:** Git branches can be created not only from other branches, but
 > also created from Git tags.  You should enable branch protection on hotfix
@@ -274,7 +274,7 @@ The hotfix release flow becomes the exact same flow as for `master` branch.
 
 <hr />
 
-<img src="{% link assets/diagrams/glew/git_hotfix_flow.png %}" alt="Diagram depicts the same workflow as master branch but on the hotfix branch, instead" />
+<img src="../../../../assets/diagrams/glew/git_hotfix_flow.png" alt="Diagram depicts the same workflow as master branch but on the hotfix branch, instead" />
 
 </details>
 
@@ -290,12 +290,12 @@ stable and it's time to port all hotfixes back to the master branch.  This can
 be done by cherry picking the merge commits.
 
 ![Diagram depicts cherry-picking hotfix releases into a feature branch for
-master]({% link assets/diagrams/glew/git_port_hotfix_to_master_flow.png %})
+master](../../../../assets/diagrams/glew/git_port_hotfix_to_master_flow.png)
 
 > **Figure 3.** Port hotfixes back to master branch by cherry-picking merge
 > commits from hotfix releases.
 
-#### <img src="{% link assets/diagrams/glew/1.png %}" style="height: 1.5em" alt="1." /> Diagram overview
+#### <img src="../../../../assets/diagrams/glew/1.png" style="height: 1.5em" alt="1." /> Diagram overview
 
 To the left of the diagram is the `master` branch where there's the `1.0.2`
 release (if you recall earlier we needed to hotfix `1.0.1`).
@@ -309,7 +309,7 @@ developer released two hotfix releases:
 These releases are consistently formatted with [semantic
 versioning](https://semver.org/).
 
-#### <img src="{% link assets/diagrams/glew/2.png %}" style="height: 1.5em" alt="2." /> How to reference merge commits
+#### <img src="../../../../assets/diagrams/glew/2.png" style="height: 1.5em" alt="2." /> How to reference merge commits
 
 In the Git Low Effort Workflow, Git tag releases are commits which are one ahead
 of a merge commit or tag which is diverging from the developed branch (e.g.
@@ -327,7 +327,7 @@ branch.  You can reference their respective merge commits the following way.
 > to [Git ancestry references][git-ancestry].  `1.0.1-1~1` is short hand for one
 > commit before `1.0.1-1`.  One commit before `1.0.1-1` is the merge commit.
 
-#### <img src="{% link assets/diagrams/glew/3.png %}" style="height: 1.5em" alt="3." /> Create a branch from master and cherry pick merge commits
+#### <img src="../../../../assets/diagrams/glew/3.png" style="height: 1.5em" alt="3." /> Create a branch from master and cherry pick merge commits
 
 > **Pro tip:** Cherry picking only picks from the literal commit.  So it will
 > not include version bumping in the cherry-picked diff.
@@ -359,7 +359,7 @@ git push origin -u my_fixes
 
 Review and merge.
 
-#### <img src="{% link assets/diagrams/glew/4.png %}" style="height: 1.5em" alt="4." /> Merging ported hotfixes creates a normal release 1.0.3
+#### <img src="../../../../assets/diagrams/glew/4.png" style="height: 1.5em" alt="4." /> Merging ported hotfixes creates a normal release 1.0.3
 
 The latest release is `1.0.2`.  When you merge all of your ported hotfixes, they
 will be bumped into the next release `1.0.3`.  All development on from the
@@ -378,4 +378,4 @@ master branch after `1.0.3` release will include the necessary hotfixes.
 [git-ancestry]: https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#_ancestry_references
 [git-cherry]: https://git-scm.com/docs/git-cherry-pick
 [jervis-1.6]: http://sam.gleske.net/jervis-api/1.6/net/gleske/jervis/tools/AutoRelease.html
-[scalable-workflow]: {% link _posts/2019-03-27-scalable-delivery-workflow.md %}
+[scalable-workflow]: http://sam.gleske.net/blog/engineering/2019/03/27/scalable-delivery-workflow.html
