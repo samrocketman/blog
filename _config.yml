@@ -35,3 +35,9 @@ exclude:
   - grammar_skip.sentences
   - make
   - vendor
+
+defaults:
+  - scope:
+      path: "assets/diagrams/glew/*.png"
+    values:
+      image: true
