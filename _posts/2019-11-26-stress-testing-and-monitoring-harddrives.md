@@ -156,13 +156,14 @@ you understand what needs to be done.
 I'll address these parts a little bit at a time.  How to prevent failures is not
 really about preventing them, but more about being proactive in monitoring.
 
-On Linux, to get RAID utilities you install the package `smartmontools` (in
-Debian).  This gives you disk troubleshooting utilities such as `smartctl`.
-Another neat thing this provides is automatic monitoring of SMART data for all
-drives mounted in your computer.  `smartmontools` will email you when it detects
-a potential imminent failure.  Most people do not configure their computers to
-send email but if you do then you'll get an email saying "your drive is about to
-fail so replace it" kind of message from your own system.
+On Linux, to get disk monitoring utilities you install the package
+`smartmontools` (in Debian).  This gives you disk troubleshooting utilities such
+as `smartctl`.  Another neat thing this provides is automatic monitoring of
+SMART data for all drives mounted in your computer.  `smartmontools` will email
+you when it detects a potential imminent failure.  Most people do not configure
+their computers to send email but if you do then you'll get an email saying
+"your drive is about to fail so replace it" kind of message from your own
+system.
 
 For this to work, you must configure your system to send email.  Rather than
 trying to maintain your own mail server (I don't personally), I would configure
