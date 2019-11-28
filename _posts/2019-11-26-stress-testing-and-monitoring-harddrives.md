@@ -46,7 +46,7 @@ commands.  Let's say your drive is `/dev/XDD` (note I'm **intentionally** making
 this a weird non-existent Linux drive so that someone doesn't accidentally copy
 and paste it destroying their own data).
 
-```
+```bash
 # terminal 1
 while true; do dd if=/dev/zero of=/dev/XDD bs=1000M; done
 
