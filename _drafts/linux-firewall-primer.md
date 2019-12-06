@@ -155,6 +155,7 @@ outbound).
 
 Some key points about the basic default firewall above:
 
+- Rules are interpreted from top to bottom.  So if you add a rule after a REJECT
 - Inbound traffic is blocked by default.  However, established and related TCP
   traffic is allowed.
 - Outbound traffic is unrestricted.  Note that the lines start with a pound
@@ -171,6 +172,63 @@ workstation will pass through the firewall.
 - Information is transfered between the server and client.  Client requests get
   sent through `OUTPUT` and server responses come through `INPUT` chain.  All of
   this traffic is `RELATED` to the established TCP session.
+
+# Adding your first firewall rules
+
+Let's make this firewall more strict.  We're going to **restrict outbound
+traffic**.  Restricting outbound traffic may help if a machine gets compromised.
+Botnets tend try to connect to [command and control servers][cnc] on non-standard
+ports.  So the easiest thing to do is to restrict all outbound communication to
+only the bare minimum that your computer needs.
+
+> **Side note:** restricting outbound traffic may affect [captive
+> portals][cap-portal] when using public wifi since captive portals also tend to
+> use non-standard ports.  This only affects Linux laptops roaming across
+> wifi networks.  Temporarily disable restricting outbound connectivity.
+>
+>     sudo iptables -D OUTPUT -j REJECT --reject-with icmp-host-prohibited
+>
+> Re-enable restricting outbound traffic after you complete the captive portal.
+>
+>     sudo iptables -A OUTPUT -j REJECT --reject-with icmp-host-prohibited
+
+The following table will list common network services a computer needs for
+outbound connectivity.
+
+| Port | Protocol | Purpose of connectivity                                    |
+| ==== | ======== | ========================================================== |
+| 21   | TCP      | [FTP][ftp] for system updates                              |
+| 22   | TCP      | [SSH][ssh] connectivity for managing remote servers        |
+| 53   | TCP, UDP | [DNS][dns] lookups for resolving hosts on the network      |
+| 80   | TCP      | [HTTP][http] commonly used for updates and web             |
+| 443  | TCP      | [HTTPS][https] commonly used for secure updates and web    |
+| 123  | TCP, UDP | [NTP][ntp] for time syncronization                         |
+| 587  | TCP      | [SMTPS][smtps] for sending mail securely from mail clients |
+| 33434 to 33534 | UDP | [Traceroute][traceroute] port range for network troubleshooting |
+
+> **Side notes:** I skipped some common ports for security.
+>
+> * Port 21 [FTP][ftp] is commonly used by Debian-based distributions as update
+>   mirrors.  Otherwise, this protocol should generally be avoided.
+> * Port 25 plain [SMTP][smtp] should be avoided if using authentication.
+
+Without custom chains, adding and removing rules can be challenging because
+iptables always appends rules.  So if you append a rule after a `-j REJECT
+--reject-with icmp-host-prohibited`, then the rule will never be reached.  To
+accommodate this, let's add a custom chain called `OUTPUT_allow`.
+
+### Restrict OUTPUT by using a custom chain
+
+Remember in the basic default firewall, we commented out the `OUTPUT` rules?
+
+```bash
+# outbound traffic rules (block by default)
+#-A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+#-A OUTPUT -j LOGGING
+#-A OUTPUT -j REJECT --reject-with icmp-host-prohibited
+```
+
+TODO: finish this section
 
 # Regional whitelist
 
@@ -325,17 +383,18 @@ to the `ARIN_NETWORKS` chain.
 -A ARIN_NETWORKS -s 209.0.0.0/8 -g ARIN_NETWORKS_allow
 -A ARIN_NETWORKS -s 216.0.0.0/8 -g ARIN_NETWORKS_allow
 
-# reject all traffic not originating from American regional networks.
--A ARIN_NETWORKS -j REJECT
+# Drop all traffic not originating from American regional networks.  This must
+# be at the end in order for other rules to match and not drop traffic.
+-A ARIN_NETWORKS -j DROP
 ```
 
-The last rule in the `ARIN_NETWORKS` chain will outright drop traffic without
-reason (i.e. not send an `ICMP` reason that it was blocked).  This will make it
-seem like there is no computer at all.  Traffic will be "lost" from the
-perspective of the machine attempting to connect to your server.  It is the last
-rule because if any ARIN network addresses match rules, then it will jump
-straight to the `ARIN_NETWORKS_allow` chain and not be rejected because of the
-regional rule.
+In the last rule, `-j DROP` target completely drops traffic and makes a computer
+appear non-existent.
+
+Traffic will be "lost" from the perspective of the machine attempting to connect
+to your server.  It is the last rule because if any ARIN network addresses match
+rules, then it will jump straight to the `ARIN_NETWORKS_allow` chain and not be
+rejected because of the regional rule.
 
 Blocking all other regions is a good way to _significantly_ limit the source of
 attacks which can occur on your own computers and networks.  Regional white
@@ -344,7 +403,13 @@ to your own services.  Block countries and regions where you're unlikely to
 travel which is best done via network whitelisting.
 
 [arin]: https://www.arin.net/
+[cap-portal]: https://en.wikipedia.org/wiki/Captive_portal
+[cnc]: https://en.wikipedia.org/wiki/Botnet
+[dns]: https://en.wikipedia.org/wiki/Domain_Name_System
+[ftp]: https://en.wikipedia.org/wiki/File_Transfer_Protocol
 [gawk]: https://www.gnu.org/software/gawk/manual/
+[http]: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol
+[https]: https://en.wikipedia.org/wiki/HTTPS
 [ip-blocks-iana]: https://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xhtml
 [ip-blocks-wiki]: https://en.wikipedia.org/wiki/List_of_assigned_/8_IPv4_address_blocks
 [ip2location]: https://www.ip2location.com/free/visitor-blocker
@@ -352,3 +417,8 @@ travel which is best done via network whitelisting.
 [man-iptables]: https://manpages.ubuntu.com/manpages/bionic/en/man8/iptables.8.html
 [nat]: https://en.wikipedia.org/wiki/Network_address_translation
 [nftables]: https://wiki.nftables.org/
+[ntp]: https://en.wikipedia.org/wiki/Network_Time_Protocol
+[smtp]: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol
+[smtps]: https://en.wikipedia.org/wiki/SMTPS
+[ssh]: https://en.wikipedia.org/wiki/Secure_Shell
+[traceroute]: https://en.wikipedia.org/wiki/Traceroute
