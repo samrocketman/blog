@@ -52,3 +52,74 @@ h6 {
 div#content, ul li {
   font-size: 12pt;
 }
+
+#content table tfoot tr td {
+    background-color: #fff;
+}
+#content table tfoot > tr:nth-child(odd) > td, .content table tfoot > tr:nth-child(odd) > td, .content table tfoot > tr:nth-child(odd) > td  {
+    background-color: #f9f9f9
+}
+#content table {
+    border-collapse: separate;
+    border: 2px solid grey;
+    border-radius: 5px 20px;
+    -moz-border-radius: 5px 20px;
+    width: 100%;
+    margin: 20px 0
+}
+
+#content table tr th {
+    border-collapse: collapse;
+    border: 1px solid black;
+    color: black;
+    background: rgba(219, 72, 0, 0.10);
+    border-top: none;
+}
+#content table tbody tr td:last-child {
+    border-right: none;
+    border-top-right-radius: 19px;
+    -moz-border-top-right-radius: 19px;
+}
+#content table tbody tr td:first-child {
+    border-left: none;
+    border-top-left-radius: 4px;
+    -moz-border-top-left-radius: 4px;
+}
+#content table tr td {
+    border-collapse: collapse;
+    border: 1px dotted grey;
+}
+#content table tr:last-child td {
+    border-bottom: none;
+}
+#content table tr td:first-child {
+    border-left: none;
+}
+#content table tfoot tr:last-child td:first-child {
+    border-bottom-left-radius: 20px;
+    -moz-border-bottom-left-radius: 20px;
+}
+#content table tr td:last-child {
+    border-right: none;
+}
+#content table tfoot tr:last-child td:last-child {
+    border-bottom-left-radius: 5px;
+    -moz-border-bottom-left-radius: 5px;
+}
+#content table tfoot tr td:first-child, #content table tbody tr td:first-child {
+  padding-left: 2em;
+  padding-right: 2em;
+  font-size: 1.5em;
+  width: 1em;
+  white-space: nowrap;
+}
+#content table tr td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1.5em;
+}
+#content table tbody tr td {
+  font-weight: bold;
+  color: #f0dfaf;
+  background-color: #3f3f3f;
+}
