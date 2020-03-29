@@ -105,7 +105,7 @@ Here's a quote of the question:
 
 Thanks for expanding on your use case.  I think this is the perfect case for
 you to use matrix building and conditional locks with a shared pipeline library
-step.  I'll try to expand on this with Reddit character limits...
+step.  I'll try to expand on this in a sensible broken down fashion.
 
 # Assumptions
 
