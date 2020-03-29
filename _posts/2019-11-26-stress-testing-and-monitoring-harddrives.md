@@ -3,6 +3,7 @@ layout: post
 title: Stress testing and monitoring harddrives
 category: engineering
 tags:
+ - reddit-response
  - tips
 year: 2019
 month: 11
