@@ -224,11 +224,15 @@ for(int i = 0; i < axes.size(); i++) {
     String stageName = axisEnv.join(', ')
 
     // execute code only if conditional lock is obtained
-    matrixConditionalLock(axis) {
-        node(nodeLabel) {
-            checkout scm
-            withEnv(axisEnv) {
-                sh './scripts/ci-entrypoint.sh'
+    tasks[stageName] = { ->
+        stage(stageName) {
+            matrixConditionalLock(axis) {
+                node(nodeLabel) {
+                    checkout scm
+                    withEnv(axisEnv) {
+                        sh './scripts/ci-entrypoint.sh'
+                    }
+                }
             }
         }
     }
