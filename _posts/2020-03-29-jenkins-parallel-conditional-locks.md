@@ -155,7 +155,8 @@ Let's define a shared pipeline conditional lock step based on taking an axis as
 input.  In this step, we'll need to support closures so that we can wrap code
 inside of the block.
 
-Let's name this step `vars/matrixConditionalLock.groov`.  Now for the source code.
+Let's name this step `vars/matrixConditionalLock.groovy`.  Now for the source
+code.
 
 ```groovy
 // Recursive function that obtains multiple locks at once (or no locks)
