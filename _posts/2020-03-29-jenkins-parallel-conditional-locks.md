@@ -121,9 +121,9 @@ clarification please feel free to ask me followup questions.
   I'll be writing here.
 - I recently wrote a [Jenkins CI blog post on matrix building][matrix].  Please
   read it.
-- In that post, I give a shared pipeline step
-  [`getMatrixAxes()`][getMatrixAxes].  Copy this into your own shared library
-  so that you can use it.
+- In that post, I give a [shared pipeline step
+  `getMatrixAxes()`][getMatrixAxes].  Copy this into your own shared library so
+  that you can use it.
 
 # Example matrix
 
