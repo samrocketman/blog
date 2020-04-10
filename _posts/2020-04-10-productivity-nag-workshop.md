@@ -135,5 +135,8 @@ If you're on Mac OS X and you want to change the voice being used by
 
 For additional information see
 
-* https://github.com/samrocketman/home/tree/master/bin#jenkins-productivity-scripts
-* https://github.com/samrocketman/home/tree/master/bin#github-productivity-scripts
+* [Jenkins productivity scripts][jenkins-scripts].
+* [GitHub productivity scripts][github-scripts].
+
+[jenkins-scripts]: https://github.com/samrocketman/home/tree/master/bin#jenkins-productivity-scripts
+[github-scripts]: https://github.com/samrocketman/home/tree/master/bin#github-productivity-scripts
