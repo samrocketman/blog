@@ -5,12 +5,16 @@ YEAR := $(shell date +%Y)
 MONTH := $(shell date +%m)
 DAY := $(shell date +%d)
 DATESTAMP := $(shell date +%Y-%m-%d)
+RUBY_BLOG := $(shell docker images --filter=reference=ruby-blog:latest -q )
+ifndef RUBY_BLOG
+	ADDITIONAL_TARGETS := deps
+endif
 
 ifneq ($(DRAFT),)
 	DRAFT := $(DRAFT)
 endif
 
-serve:
+serve: $(ADDITIONAL_TARGETS)
 	docker run -it --rm -v '$(PWD)':/mnt -w /mnt --init --rm -p 4000:4000 -- ruby-blog \
 	bundle exec jekyll serve --watch --config _config.yml,_config_local.yml,_config_dev.yml --drafts --unpublished --host=0.0.0.0
 
