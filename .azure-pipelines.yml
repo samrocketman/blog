@@ -10,6 +10,5 @@ jobs:
     steps:
       - bash: |
           set -ex
-          make deps
           make test
         displayName: Run tests and verify signatures
