@@ -1,7 +1,7 @@
 trigger:
-  - master
+  - main
 pr:
-  - master
+  - main
 jobs:
   - job: ubuntu1604_docker
     displayName: Ubuntu 16.04 docker build

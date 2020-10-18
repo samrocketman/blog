@@ -4,6 +4,6 @@ install: true
 script: "make test"
 branches:
   only:
-    - "master"
+    - "main"
 services:
   - docker

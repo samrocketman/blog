@@ -39,12 +39,12 @@ export JENKINS_HEADERS_FILE=~/.jenkins-headers.json
 # Download scripts into your personal bin directory
 
 Source code for scripts being downloaded found at
-https://github.com/samrocketman/home/tree/master/bin
+https://github.com/samrocketman/home/tree/main/bin
 
 ```bash
 mkdir ~/bin
 cd ~/bin
-export baseurl=https://raw.githubusercontent.com/samrocketman/home/master/bin
+export baseurl=https://raw.githubusercontent.com/samrocketman/home/main/bin
 for x in say_job_done.sh jenkins-call-url jenkins_wait_job.sh jenkins_wait_reboot_done.sh jenkins_script_console.sh; do
   curl -Lo ~/bin/"$x" "$baseurl"/"$x"
   chmod 755 ~/bin/"$x"
@@ -138,5 +138,5 @@ For additional information see
 * [Jenkins productivity scripts][jenkins-scripts].
 * [GitHub productivity scripts][github-scripts].
 
-[jenkins-scripts]: https://github.com/samrocketman/home/tree/master/bin#jenkins-productivity-scripts
-[github-scripts]: https://github.com/samrocketman/home/tree/master/bin#github-productivity-scripts
+[jenkins-scripts]: https://github.com/samrocketman/home/tree/main/bin#jenkins-productivity-scripts
+[github-scripts]: https://github.com/samrocketman/home/tree/main/bin#github-productivity-scripts

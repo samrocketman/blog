@@ -336,7 +336,7 @@ Happy Hacking!
 [ccp]: http://cs.stackexchange.com/questions/19987/difference-between-parallel-and-concurrent-programming
 [ci]: https://en.wikipedia.org/wiki/Continuous_integration
 [closures]: http://www.groovy-lang.org/closures.html#_calling_a_closure
-[dsl-script]: https://github.com/samrocketman/jervis/blob/master/jobs/firstjob_dsl.groovy
+[dsl-script]: https://github.com/samrocketman/jervis/blob/main/jobs/firstjob_dsl.groovy
 [gh-api]: https://developer.github.com/v3/
 [git]: http://sam.gleske.net/blog/education/2015/10/30/learning-git.html
 [groovy]: http://www.groovy-lang.org/
