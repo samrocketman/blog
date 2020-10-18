@@ -82,8 +82,8 @@ Here's my OS and utilities.
 I created [cloneable][cloneable] for backing up my GitHub.  I'm going to use it
 in order to clone all projects.
 
-I created a personal access token with `repo` scope and cloned all projects.  I
-downloaded and setup cloneable.
+I created a [personal access token][github-token] with `repo` scope and cloned
+all projects.  I downloaded and setup cloneable.
 
 ```bash
 export GITHUB_TOKEN="repo scoped GitHub personal access token"
@@ -432,6 +432,7 @@ find . -maxdepth 1 -type d -name '*.git' | \
 [blog-changes-2]: https://github.com/samrocketman/blog/commit/01e507acc85ac0ae17e124bf3aac2ab1d5863ba3
 [cloneable]: https://github.com/samrocketman/cloneable
 [git-refspec]: https://git-scm.com/book/en/v2/Git-Internals-The-Refspec
+[github-token]: https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token
 [jervis-1.7-api]: http://sam.gleske.net/jervis-api/1.7/
 [jervis-api]: https://github.com/samrocketman/jervis-api
 [jervis]: https://github.com/samrocketman/jervis/
