@@ -12,10 +12,38 @@ published: true
 type: markdown
 ---
 
-This post covers how I migrated all of my GitHub projects from master branch to
-main.  It's going to involve:
+This post covers how I migrated all of my GitHub projects from `master` branch
+to main.
 
-1. Mirroring all GitHub projects as local mirrors.  In my case, I will only
+
+* TOC
+{:toc}
+
+# Summary
+
+In my journey of migrating all of my GitHub repositories from their default
+branch `master` to use `main` as the default I did the following.
+
+- Total migration time about 8 hours which includes writing this post and
+  developing all code discussed herein.
+- I have 130 repositories.
+- 129 repositories required migrating from `master` to `main`.
+- 124 repositories required their default branch settings in GitHub to be
+  updated.
+- 4 repositories required branch protection settings to be updated.  I did this
+  manually.
+- 69 of my repositories were sources (not forks from other users or
+  organizations).
+- 19 repositories required code changes.
+  - 9 files related to CI code were changed.
+  - 13 files related to markdown documentation were changed.
+  - This blog had some additional files which required updating.
+
+# Overview
+
+A full migration will generally take the following steps:
+
+1. Mirroring all GitHub projects as local mirrors.  Initially, I will only
    include source repositories (not forks).  I'm excluding forks to simplify
    changing code in only repositories I own.  In step 6, I'll mirror my forks
    before updating their branches to main.
@@ -31,22 +59,6 @@ main.  It's going to involve:
 8. For all projects whose default branch is master, switch the default to main.
 9. Delete the master branch for every project.
 
-* TOC
-{:toc}
-
-# Summary
-
-In my journey of migrating all of my GitHub repositories from their default
-branch `master` to use `main` as the default I did the following.
-
-- 69 of my repositories were sources (not forks from other users or
-  organizations).
-- I had to edit code in some of the repositories.
-  - 9 files related to CI code were changed.
-  - 13 files related to markdown documentation were changed.
-- In total, I migrated 129 repositories under my GitHub user from `master` to
-  `main` as the default branch.
-
 # Migration environment
 
 I'm using Linux with GNU utilities and openjdk.  If you're migrating from Mac
@@ -60,7 +72,7 @@ Here's my OS and utilities.
     GNU bash, version 4.4.20(1)-release (x86_64-pc-linux-gnu)
     openjdk version "1.8.0_265" 64-Bit
 
-# Locally mirror all GitHub projects.
+# Locally mirror source GitHub projects
 
 I created [cloneable][cloneable] for backing up my GitHub.  I'm going to use it
 in order to clone all projects.
@@ -104,7 +116,7 @@ directories is not often used by git users but here I thought it was most
 appropriate because it simplified finding repositories I needed to migrate to
 `main` branch as the default branch.
 
-# Migrate code tied to master
+# Migrate code tied to master branch
 
 Some repositories will have source code files tied to the `master` branch such
 as CI files.  Typically, CI code files are not more than 2 levels deep in the
@@ -114,6 +126,7 @@ going to exclude the `.git` directory from the source code search.
 I performed an initial code search for potential files which would be tied to a
 branch name.
 
+    cd ~/git/main-migration/clones
     find . -maxdepth 3 -type f | \
       grep -vF '/.git/' | \
       xargs -P16 -n1 -I{} -- grep -lF master {}
@@ -144,6 +157,7 @@ I added the list of files to a grep filter file (I'll call it `filter-file`).
 I reran my find/xargs/grep command but added filtering for the `filter-file` to
 it.
 
+    cd ~/git/main-migration/clones
     find . -maxdepth 3 -type f | \
       grep -vF '/.git/' | \
       xargs -P16 -n1 -I{} -- grep -lF master {} | \
@@ -156,6 +170,15 @@ repositories.
 
 ### Migrating Markdown documentation
 
+I searched for markdown files which needed to be inspected.  Unfortunately there
+was no way to get around reading each of the 30 files found and editing them by
+hand.
+
+    cd ~/git/main-migration/clones
+    find . -maxdepth 3 -type f | \
+      grep -vF '/.git/' | \
+      xargs -P16 -n1 -I{} -- grep -lF master {} | \
+      grep '\.md$'
 
 # Inspect repositories with alternate default branches
 
@@ -184,11 +207,209 @@ Upon inspecting their code base, neither will be adversely affected.
 > branch at all.  So before I perform my final `master` to `main` branch
 > migration I'll be sure to delete it.
 
-# TODO
+# Committing all migrated code
 
-document the rest of my migration.  Since I'm writing this mid-migration I want
-to publish the post first so that commit messages can include a URL to this blog
-post.  I'll update this soon with the rest of the blog post.
+Now that I'm done migrating code, it was time to commit changes to my local
+repository mirrors.  I created a commit message (I'll call it `message` in my
+command) so that all of the commits include the same message.
+
+It was useful for me to see which repositories would be getting committed
+changes.
+
+```bash
+cd ~/git/main-migration/clones
+for x in *;do (cd "$x"; git diff --exit-code &> /dev/null || echo "$x"; ); done
+```
+
+Finally, it was time for me to make the commits using `../../message` that I
+created (in this case it was located in `~/git/main-migration/message`).
+
+```bash
+cd ~/git/main-migration/clones
+for x in *; do
+  (
+    cd "$x";
+    git diff --exit-code || (
+      git add -A;
+      git commit -F ../../message;
+    );
+  );
+done
+```
+
+The above code was written as a one liner but I indented it in this post for
+readability.
+
+### Pushing code back to mirror
+
+I still need to push all of the code back to their respective mirrors located at
+`~/git/main-migration/mirrors`.
+
+```bash
+cd ~/git/main-migration/clones
+for x in *; do (cd "$x"; git push origin master; ); done
+```
+
+# Mirror all of my GitHub repositories
+
+I initially only cloned my source repositories because I needed to edit code to
+migrate the branch from `master` to `main`.  However, ultimately I want to
+migrate all of my repositories including forks.
+
+In this step, I'll clone all of my missing forks using [cloneable][cloneable]
+again.  Note the following clonable options `-f` is missing now so forks are not
+excluded this time.
+
+    cd ~/git/main-migration/mirrors/
+    java -jar cloneable.jar -buo samrocketman | \
+      xargs -P16 -n1 -I{} -- git clone --mirror {}
+
+# Push all projects to GitHub main branch
+
+The `master` branch for all of my projects have been updated to be compatible
+with `main` branch name.  It is time to push it.  This will be simple using the
+[Git refspec][git-refspec].
+
+> **Important:** Remember I don't update [`jervis-api.git`][jervis-api] so I
+> remove it before doing my branch update operation.
+
+
+```bash
+cd ~/git/main-migration/mirrors/
+rm -rf jervis-api.git
+find . -type d -name '*.git' | \
+  xargs -P16 -n1 -I{} -- \
+  /bin/bash -exc 'cd "{}"; git config remote.origin.mirror false; git push origin refs/heads/master:refs/heads/main'
+```
+
+> **Note:** I executed `git config remote.origin.mirror false` in each
+> repository before pushing because otherwise Git would have failed with an
+> error.  Git does not allow pushing refspecs when a repository is a mirror.
+> This was a unique case where we wanted to mirror repositories when cloning but
+> do some custom logic when pushing (i.e. not mirror).
+
+# Change default branch to main
+
+For all projects where the default branch is `master`, I wanted to switch the
+default branch to `main`.  The only way I could feasibly do this is via GitHub
+API so this is going to get a little bit more code heavy than previous examples.
+
+I wrote my own GitHub API client in Groovy within my personal [Jervis][jervis]
+project.  So I'll use that and check out a tag for archival purposes.  In
+reality you can do this in any programming language I've just been doing a lot
+of Groovy programming so it is my go to for heavy GitHub operations.
+
+Clone and setup Jervis.  Please note, this requires OpenJDK 8 or similar Java
+version.  I'll be using Git tag `jervis-1.7` and you can [read the documentation
+for this API version][jervis-1.7-api].
+
+    cd ~/git/main-migration/
+    git clone https://github.com/samrocketman/jervis/
+    cd jervis/
+    git checkout jervis-1.7
+    ./gradlew console
+
+In the Groovy console, I wrote up and ran the following script.  You will need
+to change the user name for your own projects.  Paste the following into the
+Groovy console.
+
+```groovy
+String github_token = 'personal access token with repo scope'
+String github_user = 'samrocketman'
+Boolean dryRun = true
+
+// set dryRun = false when you want to really make changes.  Otherwise, this
+// will just tell you what will be changed without making any repository
+// settings updates.
+
+/*
+ * Non-variable code; no need to edit beyond this point.
+ */
+import net.gleske.jervis.remotes.GitHubGraphQL
+import net.gleske.jervis.remotes.GitHub
+import groovy.json.JsonBuilder
+
+GitHub githubV3 = new GitHub()
+githubV3.gh_token = github_token
+GitHubGraphQL githubV4 = new GitHubGraphQL()
+githubV4.token = github_token
+String graphql_query = '''
+query RepositoryBranches( $user: String!, $page: String = null) {
+  repositoryOwner(login: $user) {
+    repositories(first: 100, affiliations: OWNER, after: $page) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      repository: nodes {
+        nameWithOwner
+        name
+        isFork
+        defaultBranch: defaultBranchRef {
+          name
+        }
+      }
+    }
+  }
+}
+'''.trim()
+Map graphql_variables = [user: github_user]
+Boolean queryAgain = true
+Map repositories = [:]
+// get all repositories whose default branch is master
+while(queryAgain) {
+    Map response = githubV4.sendGQL(graphql_query, (graphql_variables as JsonBuilder).toString())
+    response = response.data.repositoryOwner.repositories
+    repositories += response.repository.findAll {
+        it.defaultBranch.name == 'master'
+    }.collect {
+        [(it.nameWithOwner): it]
+    }?.sum() ?: [:]
+    queryAgain = response.pageInfo.hasNextPage
+    if(queryAgain) {
+        graphql_variables.page = response.pageInfo.endCursor
+    }
+}
+
+// iterate over all repositories and update default branch to main
+Map data = [default_branch: 'main']
+repositories.each { k, v ->
+    println "${dryRun? "DRYRUN: " : ''}Changing default branch of ${k} to 'main'."
+    data.name = v.name
+    if(!dryRun) {
+        githubV3.apiFetch(
+                "repos/${k}",
+                ['X-HTTP-Method-Override': 'PATCH'],
+                'POST',
+                (data as JsonBuilder).toString())
+    }
+    println 'Success.'
+}
+if(repositories) {
+    println 'All repositories updated.'
+}
+else {
+    println 'No repositories found with default branch set to master.'
+}
+null
+```
+
+# Delete master branch for all projects
+
+The last step of the migration is to clean up branches which will no longer be
+used.  The following code will delete the `master` branch from every one of my
+repositories.  Once again, I'm using a [Git refspec][git-refspec] to delete
+branches.
+
+```bash
+cd ~/git/main-migration/mirrors/
+find . -maxdepth 1 -type d -name '*.git' | \
+  xargs -P16 -n1 -I{} -- /bin/bash -exc 'cd "{}"; git push origin +:refs/heads/master'
+```
+
 
 [jervis-api]: https://github.com/samrocketman/jervis-api
 [cloneable]: https://github.com/samrocketman/cloneable
+[jervis]: https://github.com/samrocketman/jervis/
+[jervis-1.7-api]: http://sam.gleske.net/jervis-api/1.7/
+[git-refspec]: https://git-scm.com/book/en/v2/Git-Internals-The-Refspec
