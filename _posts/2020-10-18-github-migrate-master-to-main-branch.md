@@ -85,13 +85,15 @@ in order to clone all projects.
 I created a personal access token with `repo` scope and cloned all projects.  I
 downloaded and setup cloneable.
 
-    export GITHUB_TOKEN="repo scoped GitHub personal access token"
-    mkdir -p ~/git/main-migration/mirrors ~/git/main-migration/clones
-    cd ~/git/main-migration/mirrors/
-    curl -LO https://github.com/samrocketman/cloneable/releases/download/0.6/cloneable.jar.sha256sum
-    curl -LO https://github.com/samrocketman/cloneable/releases/download/0.6/cloneable.jar
-    sha256sum -c cloneable.jar.sha256sum
-    rm cloneable.jar.sha256sum
+```bash
+export GITHUB_TOKEN="repo scoped GitHub personal access token"
+mkdir -p ~/git/main-migration/mirrors ~/git/main-migration/clones
+cd ~/git/main-migration/mirrors/
+curl -LO https://github.com/samrocketman/cloneable/releases/download/0.6/cloneable.jar.sha256sum
+curl -LO https://github.com/samrocketman/cloneable/releases/download/0.6/cloneable.jar
+sha256sum -c cloneable.jar.sha256sum
+rm cloneable.jar.sha256sum
+```
 
 The `mirrors` directory is where I'll keep all bare mirrors of my code.  These
 are not workspaces for editing code.  That's what the `clones` directory is for
@@ -321,11 +323,13 @@ Clone and setup Jervis.  Please note, this requires OpenJDK 8 or similar Java
 version.  I'll be using Git tag `jervis-1.7` and you can [read the documentation
 for this API version][jervis-1.7-api].
 
-    cd ~/git/main-migration/
-    git clone https://github.com/samrocketman/jervis/
-    cd jervis/
-    git checkout jervis-1.7
-    ./gradlew console
+```bash
+cd ~/git/main-migration/
+git clone https://github.com/samrocketman/jervis/
+cd jervis/
+git checkout jervis-1.7
+./gradlew console
+```
 
 In the Groovy console, I wrote up and ran the following script.  You will need
 to change the user name for your own projects.  Paste the following into the
