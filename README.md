@@ -44,12 +44,12 @@ vim _config.yml
 vim LICENSE.txt
 # Step 5
 git remote add myblog git@github.com:<your_username>/<your_blog>.git
-git push myblog 'refs/heads/master:refs/heads/gh-pages'
+git push myblog 'refs/heads/main:refs/heads/gh-pages'
 ```
 
 > Note: `gh-pages` branch automatically gets published to GitHub pages.
-> However, if you'd rather be more like this blog publishing from `master`, then
-> you can customize the branch to master from the repository settings.
+> However, if you'd rather be more like this blog publishing from `main`, then
+> you can customize the branch to main from the repository settings.
 
 Legal note: the `3rd_party/` directory must remain intact in order to satisfy
 license requirements of both work provided by myself and authors in which I
@@ -167,4 +167,4 @@ for:
 [post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [pr]: https://github.com/samrocketman/blog/pulls?q=is%3Apr
 [rvm]: https://rvm.io/
-[stat]: https://travis-ci.org/samrocketman/blog.svg?branch=master
+[stat]: https://travis-ci.org/samrocketman/blog.svg?branch=main

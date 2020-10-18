@@ -37,7 +37,13 @@ branch `master` to use `main` as the default I did the following.
 - 19 repositories required code changes.
   - 9 files related to CI code were changed.
   - 13 files related to markdown documentation were changed.
-  - This blog had some additional files which required updating.
+  - [Additional][blog-changes-1] [files][blog-changes-2] changed for this blog
+    because of how I build it.
+
+> **Please note:** I completely broke my website and this blog while migrating.
+> Unfortunately, while migrating from master to main the pages settings did not
+> take.  When I deleted the master branch on the last step everything went
+> down... oops.
 
 # Overview
 
@@ -407,9 +413,10 @@ find . -maxdepth 1 -type d -name '*.git' | \
   xargs -P16 -n1 -I{} -- /bin/bash -exc 'cd "{}"; git push origin +:refs/heads/master'
 ```
 
-
-[jervis-api]: https://github.com/samrocketman/jervis-api
+[blog-changes-1]: https://github.com/samrocketman/blog/commit/c64ab3ae20fe8e0da085870b2f699a149f641668
+[blog-changes-2]: https://github.com/samrocketman/blog/commit/01e507acc85ac0ae17e124bf3aac2ab1d5863ba3
 [cloneable]: https://github.com/samrocketman/cloneable
-[jervis]: https://github.com/samrocketman/jervis/
-[jervis-1.7-api]: http://sam.gleske.net/jervis-api/1.7/
 [git-refspec]: https://git-scm.com/book/en/v2/Git-Internals-The-Refspec
+[jervis-1.7-api]: http://sam.gleske.net/jervis-api/1.7/
+[jervis-api]: https://github.com/samrocketman/jervis-api
+[jervis]: https://github.com/samrocketman/jervis/
