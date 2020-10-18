@@ -13,8 +13,7 @@ type: markdown
 ---
 
 This post covers how I migrated all of my GitHub projects from `master` branch
-to main.
-
+to `main`.
 
 * TOC
 {:toc}
@@ -41,9 +40,9 @@ branch `master` to use `main` as the default I did the following.
     because of how I build it.
 
 > **Please note:** I completely broke my website and this blog while migrating.
-> Unfortunately, while migrating from master to main the pages settings did not
-> take.  When I deleted the master branch on the last step everything went
-> down... oops.
+> Unfortunately, while migrating from master to main the [GitHub pages][pages]
+> settings did not take.  When I deleted the master branch on the last step
+> everything went down... oops.
 
 # Overview
 
@@ -100,8 +99,10 @@ and we'll touch on this later.
 
 For now, here's how I mirrored all code using `cloneable.jar`.
 
-    java -jar cloneable.jar -fbuo samrocketman | \
-      xargs -P16 -n1 -I{} -- git clone --mirror {}
+```bash
+java -jar cloneable.jar -fbuo samrocketman | \
+  xargs -P32 -n1 -I{} -- git clone --mirror {}
+```
 
 # Clone code where default branch is master
 
@@ -112,7 +113,9 @@ default branch is `master`.
 
 ```bash
 cd ~/git/main-migration/clones
-find ../mirrors -maxdepth 2 -type f -name HEAD -exec grep -Hl refs/heads/master {} + | sed 's/HEAD$//' | xargs -P16 -n1 -I{} -- git clone {}
+find ../mirrors -maxdepth 2 -type f -name HEAD -exec grep -Hl refs/heads/master {} + | \
+  sed 's/HEAD$//' | \
+  xargs -P32 -n1 -I{} -- git clone {}
 ```
 
 The above commands search all repositories where the default branch is `master`
@@ -132,10 +135,12 @@ going to exclude the `.git` directory from the source code search.
 I performed an initial code search for potential files which would be tied to a
 branch name.
 
-    cd ~/git/main-migration/clones
-    find . -maxdepth 3 -type f | \
-      grep -vF '/.git/' | \
-      xargs -P16 -n1 -I{} -- grep -lF master {}
+```bash
+cd ~/git/main-migration/clones
+find . -maxdepth 3 -type f | \
+  grep -vF '/.git/' | \
+  xargs -P32 -n1 -I{} -- grep -lF master {}
+```
 
 In my case, I came upon several false positives.  Out of `69` repositories I
 found `101` files which contained the word `master`.  I manually inspected the
@@ -163,11 +168,14 @@ I added the list of files to a grep filter file (I'll call it `filter-file`).
 I reran my find/xargs/grep command but added filtering for the `filter-file` to
 it.
 
-    cd ~/git/main-migration/clones
-    find . -maxdepth 3 -type f | \
-      grep -vF '/.git/' | \
-      xargs -P16 -n1 -I{} -- grep -lF master {} | \
-      grep -Ff filter-file
+```bash
+cd ~/git/main-migration/clones
+find . -maxdepth 3 -type f | \
+  grep -vF '/.git/' | \
+  xargs -P32 -n1 -I{} -- grep -lF master {} | \
+  grep -Ff filter-file
+```
+
 
 This produced a list of `9` CI files I needed to edit.  I opened them in `vim`
 and changed `master` to `main` in all of them.  I'm not going to create a
@@ -180,11 +188,13 @@ I searched for markdown files which needed to be inspected.  Unfortunately there
 was no way to get around reading each of the 30 files found and editing them by
 hand.
 
-    cd ~/git/main-migration/clones
-    find . -maxdepth 3 -type f | \
-      grep -vF '/.git/' | \
-      xargs -P16 -n1 -I{} -- grep -lF master {} | \
-      grep '\.md$'
+```bash
+cd ~/git/main-migration/clones
+find . -maxdepth 3 -type f | \
+  grep -vF '/.git/' | \
+  xargs -P32 -n1 -I{} -- grep -lF master {} | \
+  grep '\.md$'
+```
 
 # Inspect repositories with alternate default branches
 
@@ -196,9 +206,11 @@ I cloned all of the repositories which had a default branch set as `master`, so
 it is safe to assume that repositories I haven't cloned do not.  Let's search
 with this assumption.
 
-    cd ~/git/main-migration/clones
-    ls -1d * | xargs -n1 -I{} echo {}.git > ../repos
-    ls -1d ../mirrors/* | grep -vFf ../repos
+```bash
+cd ~/git/main-migration/clones
+ls -1d * | xargs -n1 -I{} echo {}.git > ../repos
+ls -1d ../mirrors/* | grep -vFf ../repos
+```
 
 Which returned the following results:
 
@@ -268,7 +280,7 @@ excluded this time.
 
     cd ~/git/main-migration/mirrors/
     java -jar cloneable.jar -buo samrocketman | \
-      xargs -P16 -n1 -I{} -- git clone --mirror {}
+      xargs -P32 -n1 -I{} -- git clone --mirror {}
 
 # Push all projects to GitHub main branch
 
@@ -284,7 +296,7 @@ with `main` branch name.  It is time to push it.  This will be simple using the
 cd ~/git/main-migration/mirrors/
 rm -rf jervis-api.git
 find . -type d -name '*.git' | \
-  xargs -P16 -n1 -I{} -- \
+  xargs -P32 -n1 -I{} -- \
   /bin/bash -exc 'cd "{}"; git config remote.origin.mirror false; git push origin refs/heads/master:refs/heads/main'
 ```
 
@@ -380,7 +392,7 @@ while(queryAgain) {
 // iterate over all repositories and update default branch to main
 Map data = [default_branch: 'main']
 repositories.each { k, v ->
-    println "${dryRun? "DRYRUN: " : ''}Changing default branch of ${k} to 'main'."
+    println "${dryRun? 'DRYRUN: ' : ''}Changing default branch of ${k} to 'main'."
     data.name = v.name
     if(!dryRun) {
         githubV3.apiFetch(
@@ -397,7 +409,6 @@ if(repositories) {
 else {
     println 'No repositories found with default branch set to master.'
 }
-null
 ```
 
 # Delete master branch for all projects
@@ -410,7 +421,7 @@ branches.
 ```bash
 cd ~/git/main-migration/mirrors/
 find . -maxdepth 1 -type d -name '*.git' | \
-  xargs -P16 -n1 -I{} -- /bin/bash -exc 'cd "{}"; git push origin +:refs/heads/master'
+  xargs -P32 -n1 -I{} -- /bin/bash -exc 'cd "{}"; git push origin +:refs/heads/master'
 ```
 
 [blog-changes-1]: https://github.com/samrocketman/blog/commit/c64ab3ae20fe8e0da085870b2f699a149f641668
@@ -420,3 +431,4 @@ find . -maxdepth 1 -type d -name '*.git' | \
 [jervis-1.7-api]: http://sam.gleske.net/jervis-api/1.7/
 [jervis-api]: https://github.com/samrocketman/jervis-api
 [jervis]: https://github.com/samrocketman/jervis/
+[pages]: https://pages.github.com/
