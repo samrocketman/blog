@@ -1,8 +1,8 @@
 env: production
 name: Sam Gleske
 description: adventures in computing
-url: http://sam.gleske.net/blog
-homepage: http://sam.gleske.net/
+url: https://sam.gleske.net/blog
+homepage: https://sam.gleske.net/
 github: https://github.com/samrocketman/blog
 github_branch: main
 twitter_handle: sag47

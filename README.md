@@ -164,7 +164,7 @@ for:
 [gfm]: https://guides.github.com/features/mastering-markdown/
 [kb.io]: https://keybase.io/
 [nvm]: https://github.com/creationix/nvm
-[post]: http://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
+[post]: https://sam.gleske.net/blog/slice-of-life/2015/10/22/intro.html
 [pr]: https://github.com/samrocketman/blog/pulls?q=is%3Apr
 [rvm]: https://rvm.io/
 [stat]: https://travis-ci.org/samrocketman/blog.svg?branch=main
