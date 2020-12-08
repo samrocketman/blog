@@ -125,4 +125,71 @@ In `winecfg` go to `Graphics` tab and double the `Screen resolution` to `192`
 dpi to double the size of WINE dialogs. `96` dpi is the default.  `dpi` is dots
 per inch.
 
+# Verify your monitor refresh rate
+
+Both my graphics card and monitor support 60Hz refresh rate.  However, out of
+the box my monitor was configured to run at 30Hz refresh rate.
+
+You can check with `xrandr` command.
+
+```bash
+# xrandr
+DisplayPort-5 connected primary 3840x2160+0+0 (normal left inverted right x axis y axis) 527mm x 296mm
+   3840x2160     29.98*+
+   2560x1440     59.95
+   2048x1280     59.99
+   1920x1200     59.88
+   1920x1080     60.00    60.00    50.00    59.94    24.00    23.98
+   1600x1200     60.00
+   1600x900      60.00
+   1280x1024     75.02    60.02
+   1152x864      75.00
+   1280x720      60.00    50.00    59.94
+   1024x768      75.03    60.00
+   800x600       75.00    60.32
+   720x576       50.00
+   720x480       60.00    59.94
+   640x480       75.00    60.00    59.94
+   720x400       70.08
+```
+
+Notice `3840x2160 29.98*+` means I'm running in 4K resoltion at 30Hz.
+
+In Dell Monitor settings,  I went through the menus:
+
+- Under `Display`
+- Select `Response Time`.
+- And choose `Fast` (`Normal` and `Fast` are the only two settings in my
+  monitor).
+
+After adjusting those settings my monitor flickered and came back.  I ran xrandr
+and verified my display was running at 60Hz.
+
+```bash
+# xrandr
+DisplayPort-1 connected primary 3840x2160+0+0 (normal left inverted right x axis y axis) 527mm x 296mm
+   3840x2160     60.00*+  29.98
+   2560x1440     59.95
+   2048x1280     59.99
+   1920x1200     59.88
+   1920x1080     60.00    60.00    50.00    59.94    24.00    23.98
+   1600x1200     60.00
+   1680x1050     60.00
+   1600x900      60.00
+   1280x1024     75.02    60.02
+   1440x900      60.00
+   1280x800      60.00
+   1152x864      75.00
+   1280x720      60.00    50.00    59.94
+   1024x768      75.03    60.00
+   800x600       75.00    60.32
+   720x576       50.00
+   720x480       60.00    59.94
+   640x480       75.00    60.00    59.94
+   720x400       70.08
+```
+
+Notice `3840x2160 60.00*+ 29.98`  means 30Hz and 60Hz are available and I am
+running in 4K resolution at 60Hz (`*+` is the selected refresh rate).
+
 [rust-lutris]: https://steamcommunity.com/sharedfiles/filedetails/?id=2219125189
