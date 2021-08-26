@@ -136,8 +136,8 @@ sudo apt-get update
 sudo apt-get install vagrant
 ```
 
-You'll also want to install a plugin which automates installing VirtualBox guest
-additions.
+You'll also want to install a plugin which automates installing VirtualBox Guest
+Additions.
 
     vagrant plugin install vagrant-vbguest
 
@@ -209,8 +209,7 @@ Vagrant.configure("2") do |config|
     # DVD Drive for VBox Guest Additions
     vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", "0", "--device", "1", "--type", "dvddrive", "--medium", "emptydrive"]
 
-    # USB 3 support
-    #USB 3 support may only be run once
+    # USB 3 support; it should only run initially
     unless File.exists? "usb-setup-complete"
       vb.customize ["storagectl", :id, "--name", "USB", "--add", "usb", "--controller", "USB", "--hostiocache", "on"]
       vb.customize ["modifyvm", :id, "--usb", "on", "--usbxhci", "on"]
@@ -229,23 +228,16 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-> **Note:** USB 3 support is intentionally commented out.  This is because
-> VirtualBox and Vagrant will fail with errors if you try to provision more than
-> once adding a USB controller.  It will fail stating there's already a device
-> named `USB`.  If you need USB support, then uncomment the code and provision
-> the USB device initially.  Uncomment the code for subsequent startup.
-
-A second note...
-
 > **Note:** if you use another version of Windows be sure to change the
 > operating system `--ostype`.  You can view a list of all supported OS types by
 > running the following command in your terminal.
 >
 >     VBoxManage list ostypes
 
-### First time Windows setup and Guest Additions
+### First-time Windows setup
 
-In order for Vagrant to properly manage the Windows VM you must do three steps.
+First-time setup only needs to be performed on initial provisioning and does not
+need to be repeated for the life of the virtual machine.
 
 1. Start Windows via Vagrant.
 2. Log into Windows and enable Windows Remote Management.
@@ -267,7 +259,7 @@ command prompt run the following command:
 Choose `Y` to enable Windows Remote Management.  The second command will force
 Windows Remote Management to always autostart without delay.  From this point,
 Vagrant should automatically continue with setup and installation of VirtualBox
-Guest additions.
+Guest Additions.
 
 This log shows the full output when you've completed all of the steps
 successfully.
@@ -331,8 +323,8 @@ To shut down Windows gracefully, run the following command.
 > **Note:** you can also shut Windows down from its start menu.
 
 If you would like to completely delete the Windows virtual machine, then you
-must destroy it.  The following command will permanently delete Windows again
-but it will still be available for provisioning through Vagrant.
+must destroy it.  The following command will permanently delete Windows but it
+will still be available for provisioning through Vagrant.
 
     vagrant destroy
 
