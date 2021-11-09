@@ -15,7 +15,9 @@ learn more about me then check out my [first post][post].
 - Integrated with some social media:
   - Disqus (for comments)
   - GitHub (for post history)
-  - Keybase.io (links and hosting GPG keys for automated peer review)
+  - Keybase.io links.
+  - GPG key hosting and GPG key ID (verify GPG signed posts for author
+    integrity)
   - Twitter (post sharing)
 - Automated peer review.
 - Three modes:

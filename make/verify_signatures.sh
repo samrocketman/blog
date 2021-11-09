@@ -14,16 +14,20 @@ set -e
 
 keyfile=$(mktemp --suffix=.gpg)
 
-GPG="gpg --no-default-keyring --keyring ${keyfile}"
+GPG=( gpg --no-default-keyring --keyring "${keyfile}" )
 keybase_user="$(bundle exec ruby ./make/get_yaml_key.rb keybase_user)"
-keybase_key="$(bundle exec ruby ./make/get_yaml_key.rb keybase_key)"
-keybase_url="https://keybase.io/${keybase_user}/pgp_keys.asc?fingerprint=${keybase_key}"
+gpg_key="$(bundle exec ruby ./make/get_yaml_key.rb gpg_key)"
+gpg_key_url="$(bundle exec ruby ./make/get_yaml_key.rb gpg_key_url)"
 
-curl -sL "${keybase_url}" | ${GPG} --import
+if [ -f "${gpg_key_url}" ]; then
+  "${GPG[@]}" --batch --import < "${gpg_key_url}"
+else
+  curl -sL "${gpg_key_url}" | "${GPG[@]}" --batch --import
+fi
 
-#fully trust public key 7257E65F
-${GPG} --import-ownertrust <<EOF
-${keybase_key}:6:
+#fully trust public key for verification
+"${GPG[@]}" --import-ownertrust <<EOF
+${gpg_key}:6:
 EOF
 
 echo 'Verifying post signatures.'
@@ -37,7 +41,7 @@ function verify_sigs() (
       echo "Missing signature for post: ${x}"
       return 1
     fi
-    if ! ${GPG} --verify-options show-primary-uid-only --verify "${x}.asc"; then
+    if ! "${GPG[@]}" --verify-options show-primary-uid-only --verify "${x}.asc"; then
       echo "Failed signature for post: ${x}"
       return 1
     fi

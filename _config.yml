@@ -9,7 +9,8 @@ twitter_handle: sag47
 #timezone in date TZ format
 timezone: America/New_York
 keybase_user: samrocketman
-keybase_key: 8D8BF0E242D8A068572EBF3CE8F732347257E65F
+gpg_key: 8D8BF0E242D8A068572EBF3CE8F732347257E65F
+gpg_key_url: 'https://raw.githubusercontent.com/samrocketman/gpg/master/sam_gleske.asc'
 
 markdown: kramdown
 kramdown:
