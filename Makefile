@@ -55,3 +55,6 @@ promote:
 
 sign:
 	./make/gpg_sign_posts.sh $(FILES)
+
+clean:
+	docker run -it --rm -v '$(PWD)':/mnt -w /mnt --init --rm -- ruby-blog rm -rf _site
