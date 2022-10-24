@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.1.2
 EXPOSE 4000
 ADD . /mnt
 WORKDIR /mnt
