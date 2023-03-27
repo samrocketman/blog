@@ -166,7 +166,7 @@ git push origin -u myfeature
 #### <img src="../../../../assets/diagrams/glew/2.png" style="height: 1.5em" alt="2." /> Automated checks pass and peer review occurs
 
 An automated system builds and runs tests.  Peers review code and give their
-thumgs up to approve the change to be merged.
+thumbs up to approve the change to be merged.
 
 #### <img src="../../../../assets/diagrams/glew/3.png" style="height: 1.5em" alt="3." /> Automated version bumping upon merge to master
 
