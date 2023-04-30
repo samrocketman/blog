@@ -10,7 +10,7 @@ _posts/2017-10-31-scaling-incident-management-for-small-and-large-organizations.
 _posts/2017-11-04-installing-openmw.md: Nov 20, 2017
 _posts/2017-11-17-test-infrastructure-with-goss.md: Nov 20, 2017
 _posts/2019-03-27-scalable-delivery-workflow.md: Mar 29, 2020
-_posts/2019-11-12-git-low-effort-workflow.md: Nov 12, 2019
+_posts/2019-11-12-git-low-effort-workflow.md: Mar 27, 2023
 _posts/2019-11-26-stress-testing-and-monitoring-harddrives.md: Mar 29, 2020
 _posts/2020-01-30-jenkins-build-on-push-to-git.md: Mar 29, 2020
 _posts/2020-03-29-jenkins-parallel-conditional-locks.md: Mar 29, 2020
@@ -21,3 +21,4 @@ _posts/2020-10-18-github-migrate-master-to-main-branch.md: Oct 18, 2020
 _posts/2021-05-17-ubuntu-linux-hang-on-boot-after-upgrade.md: May 17, 2021
 _posts/2021-08-25-windows-on-linux-sena-firmware.md: Aug 25, 2021
 _posts/2022-10-25-guide-to-production-docker-images.md: Oct 25, 2022
+_posts/2023-04-29-securing-tmp.md: Apr 29, 2023
