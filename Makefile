@@ -6,6 +6,8 @@ MONTH := $(shell date +%m)
 DAY := $(shell date +%d)
 DATESTAMP := $(shell date +%Y-%m-%d)
 RUBY_BLOG := $(shell docker images --filter=reference=ruby-blog:latest -q )
+UID := $(shell id -u)
+GID := $(shell id -g)
 ifndef RUBY_BLOG
 	ADDITIONAL_TARGETS := deps
 endif
@@ -15,11 +17,11 @@ ifneq ($(DRAFT),)
 endif
 
 serve: $(ADDITIONAL_TARGETS)
-	docker run -it --rm -v '$(PWD)':/mnt -w /mnt --init --rm -p 4000:4000 -- ruby-blog \
+	docker run -it --rm -v '$(PWD)':/mnt -w /mnt --init --user $(UID):$(GID) --rm -p 4000:4000 -- ruby-blog \
 	bundle exec jekyll serve --watch --config _config.yml,_config_local.yml,_config_dev.yml --drafts --unpublished --host=0.0.0.0
 
 prod:
-	docker run -it --rm -v '$(PWD)':/mnt -w /mnt --init --rm -p 4000:4000 -- ruby-blog \
+	docker run -it --rm -v '$(PWD)':/mnt -w /mnt --init --user $(UID):$(GID) --rm -p 4000:4000 -- ruby-blog \
 	bundle exec jekyll serve --watch --config _config.yml,_config_local.yml --host=0.0.0.0
 
 deps:
@@ -36,11 +38,11 @@ test: $(ADDITIONAL_TARGETS) history
 
 update-gemfile: deps
 	\rm -f Gemfile.lock
-	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --rm -- ruby-blog \
+	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --user $(UID):$(GID) --rm -- ruby-blog \
 	bundle install --jobs=3 --retry=3
 
 history:
-	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --rm -- ruby-blog \
+	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --user $(UID):$(GID) --rm -- ruby-blog \
 	bundle exec ruby ./make/update_post_history.rb
 
 promote:
