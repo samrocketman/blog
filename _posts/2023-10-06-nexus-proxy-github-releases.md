@@ -40,7 +40,7 @@ local cache would not change (nor would I want it to).
 
 [Routing rules][rr] in Nexus restrict what content is allowed to be resolved
 from a repository within Nexus.  Because GitHub has standard URLs for
-downloading for all projects you can use a regular experession in a routing
+downloading for all projects, you can use a regular experession in a routing
 rule.
 
 Routing rule settings:
@@ -61,7 +61,7 @@ only need two matchers.
 ```
 
 The first matcher covers downloading from GitHub releases.  The second matcher
-covers downloading archives from Git SHA1 or Git tag in both zip or tar.gz
+covers downloading archives from Git SHA1 or Git tag; in both, zip or tar.gz
 formats.
 
 # Proxying GitHub releases
