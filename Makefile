@@ -32,7 +32,7 @@ test: $(ADDITIONAL_TARGETS) history
 	git diff --exit-code
 	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --rm -- ruby-blog \
 	./make/verify_signatures.sh
-	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --rm -- ruby-blog \
+	docker run -t --rm -v '$(PWD)':/mnt -w /mnt --init --user $(UID):$(GID) --rm -- ruby-blog \
 	bundle exec jekyll build
 #	./make/test_grammar_based_on_commit.sh
 
