@@ -72,6 +72,9 @@ good Docker image for an application.
   - Alternately, if you prefer bash to be you Docker RUN shell you can set
     `SHELL ["/bin/bash", "-exo", "pipefail", "-c" ]`; see bash manual for [the
     set builtin][bash-set].
+  - If you only want to debug a single RUN command you can prefix commands with
+    `set` instead of changing all RUN shells.  For example, instead of `RUN \`
+    within examples, you could remove SHELL and add a single `RUN set -ex; \`.
 
 There are other good practices in general for applications such as integrating
 application performance monitoring (APM), unit testing with code coverage,
