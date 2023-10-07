@@ -48,7 +48,7 @@ Routing rule settings:
 - **Name**: `GitHubReleases`
 - **Description**: `Download GitHub Releases.  Download source code archives via
   Git SHA1 or tag.`
-- **Mode**: `Allow` (meaning any requests which do not match regex ar not
+- **Mode**: `Allow` (meaning any requests which do not match regex are not
   allowed)
 
 Finally, **Matchers** are regular expressions which restrict downloads.  You

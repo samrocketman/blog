@@ -64,11 +64,14 @@ good Docker image for an application.
   filesystem hierarchy standard][lfhs] and provide all of the above
   recommendations even if building from scratch.  I will provide an example at
   the end of this article.
-- If you add `set -ex` at the beginning of your `RUN` commands you get better
-  debug output from `/bin/sh` while Docker is building the image.  This helps
-  narrow down issues to the exact command that fails when a Docker build fails.
-  It also forces a multi-statement `RUN` command to exit with an error without
-  the need to use `&&` between commands.
+- If you add `SHELL ["/bin/sh", "-exc" ]` at the beginning of your `Dockerfile`
+  you get better debug output from `/bin/sh` while Docker is building the image.
+  This helps narrow down issues to the exact command that fails when a Docker
+  build fails.  It also forces a multi-statement `RUN` command to exit with an
+  error; without the need to use `&&` between commands.
+  - Alternately, if you prefer bash to be you Docker RUN shell you can set
+    `SHELL ["/bin/bash", "-exo", "pipefail", "-c" ]`; see bash manual for [the
+    set builtin][bash-set].
 
 There are other good practices in general for applications such as integrating
 application performance monitoring (APM), unit testing with code coverage,
@@ -175,7 +178,8 @@ let's create an example `Dockerfile`.
 ARG base=alpine
 FROM ${base}
 
-RUN set -ex; \
+SHELL ["/bin/sh", "-exc"]
+RUN \
   # Prerequisites
   apk add --no-cache build-base; \
   # Directory structure and permissions
@@ -203,7 +207,7 @@ RUN set -ex; \
 # Note: you don't need this for your own application.  In this case static bash
 #   is the example application running in user context within a minimal image
 # Comment out these lines and update CMD for your own app.
-RUN set -ex; \
+RUN \
   wget -O base/bin/bash https://github.com/robxu9/bash-static/releases/download/5.1.016-1.2.3/bash-linux-"`uname -m`"; \
   chmod 755 base/bin/bash
 
@@ -296,7 +300,8 @@ distribution.
 ARG base=alpine
 FROM ${base}
 
-RUN set -ex; \
+SHELL ["/bin/sh", "-exc"]
+RUN \
   # Prerequisites
   apk add --no-cache build-base; \
   # Directory structure and permissions
@@ -324,13 +329,13 @@ RUN set -ex; \
 # Note: you don't need this for your own application.  In this case static bash
 #   is the example application running in user context within a minimal image
 # Comment out these lines and update CMD for your own app.
-RUN set -ex; \
+RUN \
   wget -O base/bin/bash https://github.com/robxu9/bash-static/releases/download/5.1.016-1.2.3/bash-linux-"`uname -m`"; \
   chmod 755 base/bin/bash
 
 # Pull TLS certifactes and timezone info from amazon
 FROM amazonlinux:2
-RUN set -ex; \
+RUN \
   mkdir -p base/etc base/usr/share; \
   cp -r /etc/ssl /etc/pki base/etc/; \
   cp -r /usr/share/zoneinfo base/usr/share/
@@ -360,6 +365,7 @@ you would remove it to replace it with a statically compiled application.
   a very small storage price.
 - `3.53MB` when including TLS CA certificates and timezone information.
 
+[bash-set]: https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
 [docker-security]: https://docs.docker.com/engine/security/
 [dumb-init]: https://github.com/Yelp/dumb-init
 [flask-example]: https://github.com/samrocketman/docker-production-ready-flask
