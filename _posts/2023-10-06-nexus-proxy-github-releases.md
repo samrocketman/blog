@@ -55,9 +55,9 @@ Finally, **Matchers** are regular expressions which restrict downloads.  You
 only need two matchers.
 
 ```
-/[^/]+/[^/]+/releases/download/[^/]+/.*
+/[^/]+/[^/]+/releases/download/[^/]+/.+
 
-/[^/]+/[^/]+/archive/([0-9a-f]{40}|refs/tags/.*)\.(zip|tar\.gz)
+/[^/]+/[^/]+/archive/([0-9a-f]{40}|refs/tags/.+)\.(zip|tar\.gz)
 ```
 
 The first matcher covers downloading from GitHub releases.  The second matcher
