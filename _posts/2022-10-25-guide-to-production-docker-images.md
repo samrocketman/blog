@@ -354,6 +354,36 @@ WORKDIR /home/nonroot
 CMD ["/bin/bash"]
 ```
 
+# Working with shared libraries
+
+I wrote a [script named `copy-bin.sh`][copy-bin] which makes it easy to copy
+binaries which were compiled with shared object dependencies.
+
+For example, if you wanted to copy `busybox` and all of its utility references
+into an image created from scratch to inspect it; the following docker image
+would apply.
+
+```dockerfile
+FROM alpine as busybox
+SHELL ["/bin/sh", "-exc"]
+RUN \
+  wget -qO /usr/local/bin/copy-bin.sh https://raw.githubusercontent.com/samrocketman/home/main/bin/copy-bin.sh; \
+  chmod 755 /usr/local/bin/copy-bin.sh
+RUN \
+  copy-bin.sh --prefix /base --ldd /bin/busybox --links /bin:/sbin:/usr/bin:/usr/sbin
+
+FROM scratch
+COPY --from=busybox /base/ /
+CMD ["/bin/sh"]
+```
+
+With the above content in a Dockerfile; create the image.
+
+```
+docker build -t scratch-busybox -f Dockerfile.busybox .
+docker run -it --rm scratch-busybox ls
+```
+
 # Summary
 
 If you're building statically compiled binaries then you can rely on all of the
@@ -369,6 +399,7 @@ you would remove it to replace it with a statically compiled application.
 - `3.53MB` when including TLS CA certificates and timezone information.
 
 [bash-set]: https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
+[copy-bin]: https://github.com/samrocketman/home/blob/main/bin/copy-bin.sh
 [docker-security]: https://docs.docker.com/engine/security/
 [dumb-init]: https://github.com/Yelp/dumb-init
 [flask-example]: https://github.com/samrocketman/docker-production-ready-flask
