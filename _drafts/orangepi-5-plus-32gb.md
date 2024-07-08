@@ -139,3 +139,49 @@ Disable some unnecessary services and targets.
     systemctl disable nfs-client.target
     systectl disable openvpn.service
     systemctl disable dnsmasq.service
+
+# Modify orange pi before boot
+
+If you want to modify the orangepi image before boot you can mount its
+filesystem to edit.
+
+Extract the `img` file.
+
+    7za x Orangepi5plus_1.0.8_ubuntu_jammy_server_linux6.1.43.7z
+
+Get the last loop device so you know what to increment.
+
+    lsblk | grep '^loop' | tail -n1
+
+Inspect the partitions
+
+    partx /path/to/Orangepi5plus_1.0.8_ubuntu_jammy_server_linux6.1.43.img
+    fdisk -l /path/to/Orangepi5plus_1.0.8_ubuntu_jammy_server_linux6.1.43.img
+
+In my case, `loop75` is the last device so the next one will be `loop76`.
+Prepare the devices and partitions for mounting.
+
+    losetup -f /path/to/Orangepi5plus_1.0.8_ubuntu_jammy_server_linux6.1.43.img
+    partx -a -v /dev/loop76
+
+Mount the partitions.
+
+    mkdir /mnt/orangepi
+    mount /dev/loop76p2 /mnt/orangepi
+    mount /dev/loop76p1 /mnt/orangepi/boot
+
+After you're done tear down the image.
+
+    umount /mnt/orangepi/boot
+    umount /mnt/orangepi
+    losetup -d /dev/loop76
+
+# Writing image to SD card
+
+    dd if=/path/to/file.img of=/dev/mmcblk0 bs=1M oflag=dsync status=progress
+
+`oflag=dsync` forces I/O to match disk speed requiring it to be synchronized.
+This means you won't have to worry about uncached writes to the SD card.
+
+`status=progress` gives us a hint of progress.  You can `ls -lh file.img` to
+know how large it is so that you have a rough idea when it will complete.
