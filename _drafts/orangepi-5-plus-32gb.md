@@ -185,3 +185,28 @@ This means you won't have to worry about uncached writes to the SD card.
 
 `status=progress` gives us a hint of progress.  You can `ls -lh file.img` to
 know how large it is so that you have a rough idea when it will complete.
+
+# chroot into SD card
+
+From an x86 machine, it might make sense to chroot into the SD card for editing
+configuration files.
+
+Install packages for emulating aarch64 of x86.
+
+    sudo apt-get install qemu binfmt-support qemu-user-static
+
+Plugin the SD card.  In this example, SD card is mounted as
+`/media/sam/opi_root`.
+
+    docker run --platform=linux/arm64 -it --rm --privileged -v /media/sam/opi_root:/mnt -w /mnt ubuntu:22.04
+
+Run `arch` to verify you're in the correct CPU architecture (should return
+`aarch64`).  And then proceed to chroot into orangepi Ubuntu which is mounted on
+`/mnt`.
+
+    mount -o bind /dev /mnt/dev
+    mount -o bind /dev/pts /mnt/dev/pts
+    mount -o bind /sys /mnt/sys
+    mount -o bind /proc /mnt/proc
+    cp /etc/resolv.conf /mnt/etc/resolv.conf
+    chroot /mnt
