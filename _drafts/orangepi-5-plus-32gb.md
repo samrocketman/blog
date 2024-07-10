@@ -7,6 +7,10 @@ apt remove zsh tmux zsh-common
 rm -rf /root/.oh-my-zsh
 ```
 
+Find all listening ports.
+
+    lsof -i -P -n | grep LISTEN
+
 # Locale, timezone, time
 
 ```bash
