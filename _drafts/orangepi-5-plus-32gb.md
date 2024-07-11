@@ -143,6 +143,7 @@ Disable some unnecessary services and targets.
     systemctl disable nfs-client.target
     systectl disable openvpn.service
     systemctl disable dnsmasq.service
+    systemctl disable systemd-resolved
 
 # Modify orange pi before boot
 
