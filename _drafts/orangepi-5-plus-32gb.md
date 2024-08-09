@@ -215,3 +215,75 @@ Run `arch` to verify you're in the correct CPU architecture (should return
     mount -o bind /proc /mnt/proc
     cp /etc/resolv.conf /mnt/etc/resolv.conf
     chroot /mnt
+
+# Harden orangepi zero 2w
+
+Some extra steps for hardening a small orangepi.
+
+    systemctl disable orangepi-zram-config
+    systemctl disable orangepi-ramlog
+    systemctl disable systemd-resolved
+
+Ban bad SSH logins
+
+    apt install fail2ban
+    systemctl enable fail2ban
+    systemctl start fail2ban
+
+Regenerate resolv.conf.
+
+    rm /etc/resolv.conf
+    systemctl restart NetworkManager
+
+Add swap, harden memory, and harden temporary filesystems.  2GB temp file space
+and 4GB swap memory.
+
+```bash
+dd if=/dev/zero of=/tmp2g bs=128M count=16 oflag=dsync status=progress
+dd if=/dev/zero of=/swapfile bs=128M count=32 oflag=dsync status=progress
+chmod 600 /tmp2g /swapfile
+mkfs.ext4 /tmp2g
+mount /tmp2g /mnt
+chmod 1777 /mnt
+umount /mnt
+mkswap /swapfile
+
+# configure secured memory on reboot
+sed '#/tmp#d' /etc/fstab
+echo '/tmp2g /tmp ext4 loop,strictatime,noexec,nodev,nosuid 0 0' >> /etc/fstab
+echo '/tmp /var/tmp none bind 0 0' >> /etc/fstab
+echo 'tmpfs /dev/shm tmpfs defaults,noexec,nodev,nosuid,seclabel,size=1G 0 0' >> /etc/fstab
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+```
+
+Reboot and check your mounts.
+
+# Compile Linux Kernel
+
+[OrangePI wiki entry for compiling Linux Kernel][compile-wiki]
+
+This is necessary for device-mapper support because dm-mod was not included in
+the original OrangePi Ubuntu image.  device-mapper is necessary for encrypted
+disks.  See [GitHub issue][dm-mod-issue] on the matter.
+
+```
+git clone https://github.com/orangepi-xunlong/linux-orangepi.git
+cd linux-orangepi/
+git checkout orange-pi-6.1-rk35xx
+cp /boot/config-6.1.43-rockchip-rk3588 arch/arm64/configs/rockchip_linux_defconfig
+sed -i 's/.*CONFIG_BLK_DEV_DM.*/CONFIG_BLK_DEV_DM=y/' arch/arm64/configs/rockchip_linux_defconfig
+make rockchip_linux_defconfig
+make -j10
+make modules_install
+make install
+make dtbs_install INSTALL_DTBS_PATH=/boot/dtb
+```
+
+Reboot and `uname -r` should show the new kernel.
+
+    modinfo dm-mod
+
+Will now successfully display devicemapper as built-in.
+
+[compile-wiki]: http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_5_Plus#Linux_Development_Manual
+[dm-mod-issue]: https://github.com/orangepi-xunlong/orangepi-build/issues/167
