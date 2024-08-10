@@ -258,13 +258,31 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 Reboot and check your mounts.
 
-# Compile Linux Kernel
+# Add encypted drives by compiling Linux Kernel
 
 [OrangePI wiki entry for compiling Linux Kernel][compile-wiki]
 
 This is necessary for device-mapper support because dm-mod was not included in
 the original OrangePi Ubuntu image.  device-mapper is necessary for encrypted
 disks.  See [GitHub issue][dm-mod-issue] on the matter.
+
+Before you begin, back up /boot.  This can either be done by tar or dd.
+
+```bash
+tar -czf ~/boot.tgz /boot
+
+# Or minimal backup of dtbs
+tar -czf ~/dtbs.tgz /boot/dtb
+```
+
+For the most part, installed kernels won't interfere with each other in `/boot`
+or `/lib/modules`.  However, `/boot/dtb` does get interference from different
+kernels so backing up this at a minimum is recommended.
+
+### Prepare Linux config
+
+I used the Ubuntu server image containing Linux 6.1.  This matters because it
+changes the branch you would check out from the orangepi Linux kernel sources.
 
 ```
 git clone https://github.com/orangepi-xunlong/linux-orangepi.git
@@ -273,17 +291,77 @@ git checkout orange-pi-6.1-rk35xx
 cp /boot/config-6.1.43-rockchip-rk3588 arch/arm64/configs/rockchip_linux_defconfig
 sed -i 's/.*CONFIG_BLK_DEV_DM.*/CONFIG_BLK_DEV_DM=y/' arch/arm64/configs/rockchip_linux_defconfig
 make rockchip_linux_defconfig
+```
+
+This will create a `.config` file which can be edited.  Now, you need to
+customize the included Linux modules and verify dm-mod and dm-crypt kernel
+modules are available.  By default, they are not.
+
+```
+make menuconfig
+```
+
+And follow this [Linux kernel configuration guide for LUKS support][dm-crypt].
+Once `.config` supports devicemapper with dm-crypt you can compile and install
+the Linux kernel.
+
+```
 make -j10
 make modules_install
 make install
 make dtbs_install INSTALL_DTBS_PATH=/boot/dtb
 ```
 
-Reboot and `uname -r` should show the new kernel.
+Reboot and `uname -r` should show the new kernel.  Verify you have modules
+enabled.
 
     modinfo dm-mod
+    modinfo dm-crypt
 
-Will now successfully display devicemapper as built-in.
+I noticed dm-mod is built-in but dm-crypt is simply a module.  So you'll want to
+enable it.
+
+    modprobe dm-crypt
+    echo dm-crypt >> /etc/modules
+
+You can create and mount encrypted filesystems.
+
+# Managing encrypted drives
+
+On orangepi, I prefer to manually decrypt drives after boot.  I have the
+following script in `/root/decrypt.sh`.
+
+```bash
+#!/bin/bash
+
+case "$1" in
+  open)
+    cryptsetup open /dev/nvme0n1p2 encrypted
+    if [ -e /dev/mapper/encrypted ]; then
+      mount /mnt/secure
+    else
+      echo 'ERROR: /dev/mapper/encrypted does not exist.' >&2
+    fi
+    ;;
+  close)
+    cryptsetup close /dev/mapper/encrypted
+    .
+    ;;
+  *)
+    echo 'First are must be: open or close' >&2
+    exit 1
+    ;;
+esac
+```
+
+And `/etc/fstab` entries for my NVMe drive where UUIDs are filesystem UUIDs.
+
+```fstab
+UUID=deadeade-6999-4fc1-b498-8486258a1335 /mnt/fast ext4 defaults,noatime,errors=remount-ro 0 2
+UUID=deadeade-12b9-4405-99fd-619b28914527 /mnt/secure ext4 defaults,noauto,noatime,errors=remount-ro 0 0
+```
+
 
 [compile-wiki]: http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_5_Plus#Linux_Development_Manual
+[dm-crypt]: https://wiki.gentoo.org/wiki/Dm-crypt
 [dm-mod-issue]: https://github.com/orangepi-xunlong/orangepi-build/issues/167
