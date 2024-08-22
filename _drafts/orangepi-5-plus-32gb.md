@@ -361,6 +361,57 @@ UUID=deadeade-6999-4fc1-b498-8486258a1335 /mnt/fast ext4 defaults,noatime,errors
 UUID=deadeade-12b9-4405-99fd-619b28914527 /mnt/secure ext4 defaults,noauto,noatime,errors=remount-ro 0 0
 ```
 
+# Orangepi zero 2w homeassistant
+
+### Before you begin
+
+Verify you don't have a back door (exploit created from allwinner CPU maker).
+
+```bash
+# this shouldn't exist
+ls /proc/sunxi_debug/sunxi_debug
+```
+
+Set up 8GB swap and 2GB secured tmp space discussed above.  You can create an 8GB swap with the following.
+
+```bash
+dd if=/dev/zero of=/swapfile bs=32M count=256 oflag=dsync status=progress
+chmod 600 /swapfile
+mkswap /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+```
+
+### Installing home assistant
+
+Follow:
+
+* https://github.com/home-assistant/architecture/blob/master/adr/0014-home-assistant-supervised.md
+* https://github.com/home-assistant/os-agent
+* And prerequisite package installation https://github.com/home-assistant/supervised-installer
+* After all package installation is complete reboot and then proceed.
+
+Edit /etc/os-release and change OS decription because of https://github.com/home-assistant/supervised-installer/pull/262/files.  Set new description to
+
+```diff
+1c1
+< PRETTY_NAME="Debian GNU/Linux 11 (bullseye)"
+---
+> PRETTY_NAME="Orange Pi 1.0.2 Bookworm"
+```
+
+Install home-assistant.deb
+
+In the menu choose qemu-arm64 (nothing else really fits well with the allwinner CPU).
+journalctl -fu hassio-supervisor
+
+### Enable cgroup v1
+
+Enable cgroup v1 by modifying `/boot/orangepiEnv.txt` with.
+
+```
+extraargs=apparmor=1 security=apparmor systemd.unified_cgroup_hierarchy=false systemd.legacy_systemd_cgroup_controller=false
+```
+
 
 [compile-wiki]: http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_5_Plus#Linux_Development_Manual
 [dm-crypt]: https://wiki.gentoo.org/wiki/Dm-crypt
