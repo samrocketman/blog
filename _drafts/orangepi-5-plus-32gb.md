@@ -412,6 +412,51 @@ Enable cgroup v1 by modifying `/boot/orangepiEnv.txt` with.
 extraargs=apparmor=1 security=apparmor systemd.unified_cgroup_hierarchy=false systemd.legacy_systemd_cgroup_controller=false
 ```
 
+### Enable TLS with nginx
+
+Edit `/usr/share/hassio/homeassistant/configuration.yaml` and add
+
+```yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.0.0.0/8
+    - 127.0.0.1
+```
+
+Install nginx
+
+    apt install nginx
+
+Generate certificates and create `/etc/nginx/conf.d/homeassistant.conf` with
+
+```conf
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
+upstream websocket {
+    server 127.0.0.1:8123;
+}
+
+server {
+    listen              443 ssl;
+    server_name         homeassistant;
+
+    ssl_certificate     /etc/nginx/certs/homeassistant.crt;
+    ssl_certificate_key /etc/nginx/certs/homeassistant.key;
+    location / {
+        proxy_pass http://websocket;
+        proxy_set_header Host $host;
+        proxy_redirect http:// https://;
+        proxy_http_version 1.1;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+    }
+}
+```
 
 [compile-wiki]: http://www.orangepi.org/orangepiwiki/index.php/Orange_Pi_5_Plus#Linux_Development_Manual
 [dm-crypt]: https://wiki.gentoo.org/wiki/Dm-crypt
