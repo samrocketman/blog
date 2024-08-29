@@ -196,4 +196,6 @@ Enable autostarting
 
 ```
 systemctl daemon-reload
+systemctl enable rtsp-server
+systemctl start rtsp-server
 ```
