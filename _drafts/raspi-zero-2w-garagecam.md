@@ -1,4 +1,38 @@
-# Firewalls
+# Security
+
+### Harden temp space
+
+Harden temporary space and add swap.
+
+```bash
+# 4gb swap space
+dd if=/dev/zero of=/swapfile bs=128M count=32 oflag=dsync status=progress
+
+# 2gb tmp file space
+dd if=/dev/zero of=/tmp2g bs=128M count=16 oflag=dsync status=progress
+
+# Format both
+chmod 600 /tmp2g /swapfile
+mkfs.ext4 /tmp2g
+mkswap /swapfile
+mount /tmp2g /mnt
+chmod 1777 /mnt
+umount /mnt
+```
+
+`/etc/fstab` entries
+
+```fstab
+/tmp2g /tmp ext4 loop,strictatime,noexec,nodev,nosuid 0 0
+/tmp /var/tmp none bind 0 0
+tmpfs /dev/shm tmpfs defaults,nodev,nosuid,seclabel,size=64M 0 0
+/swapfile none swap sw 0 0
+```
+
+> Note: Normally `/dev/shm` would be `noexec` but mediamtx RTSP server hardcodes
+> usage of `/dev/shm` and fails if it is noexec.
+
+### Firewalls
 
 Install iptablesscripts.
 
@@ -37,6 +71,8 @@ IPv4
 # ntp
 -A OUTPUT_allow -p tcp -m state --state NEW -m tcp --dport 123 -j ACCEPT
 -A OUTPUT_allow -p udp -m state --state NEW -m udp --dport 123 -j ACCEPT
+# allow liveness-check.sh within my network
+-A OUTPUT_allow -d 192.168.1.252 -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 #-A OUTPUT_allow -p tcp -m state --state NEW -m multiport --dport 21,80,443 -j ACCEPT
 
 # internal networks
@@ -208,7 +244,7 @@ systemctl enable rtsp-server
 systemctl start rtsp-server
 ```
 
-# Garage Door monitory
+# Garage Door monitor
 
 Monitor garage door via IR sensors and activate relays to notify another device
 (like zwave universal controller).
@@ -239,5 +275,55 @@ systemctl daemon-reload
 systemctl enable garage-monitor
 systemctl start garage-monitor
 ```
+
+# Customize wifi network
+
+You can edit wifi networks by using `nmtui` utility through SSH.  `raspi-config`
+does not work.
+
+# Liveness checks
+
+My connectivity in my garage can be unreliable but usually the Pi does a good
+job reconnecting on reboot.  So every 15 minutes I want to perform a
+cross-network liveness check which reboots the Pi if it can't connect within my
+local network.
+
+The following cron runs every 15 minutes trying to reconnect up to 3 times
+within 45 seconds.
+
+```crontab
+# crontab -e; or man 5 crontab
+*/15 * * * * /opt/liveness-check.sh
+```
+
+Source for `liveness-check.sh`
+
+```bash
+#!/bin/bash
+#Created by Sam Gleske
+#Fri Sep  6 12:41:57 PM EDT 2024
+#Debian GNU/Linux 12 (bookworm)
+#Linux 6.6.31+rpt-rpi-v8 aarch64
+#curl 7.88.1 (aarch64-unknown-linux-gnu)
+#GNU bash, version 5.2.15(1)-release (aarch64-unknown-linux-gnu)
+
+set -eo pipefail
+retry_limit=3
+retries=0
+until curl -sSfLIo /dev/null http://192.168.1.252; do
+  retries=$((retries+1))
+  if [ "${retries}" -gt "${retry_limit}" ]; then
+    reboot
+    break
+  fi
+  sleep 15
+done
+```
+
+An alternate, slightly more advanced, liveness check is to use SSH
+`authorized_keys` `command="nc -vz <ip> 22"`.  By ssh to another host to have it
+try to port test back to your garage host the connectivity is tested both
+directions (to and from other hosts).
+
 
 [script]: https://github.com/samrocketman/home/blob/main/raspi/garage-monitor.py
