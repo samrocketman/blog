@@ -466,6 +466,14 @@ cat > /etc/cron.d/turn-off-leds <<'EOF'
 EOF
 ```
 
+# Configuring Z-Wave
+
+1. Plug in Zooz Z-Wave USB dongle.
+2. Log into Home Assistant.
+3. Go to settings > Integrations
+4. Add Z-Wave JS addon.  This enables your smart home hub to talk with ZWave
+   devices.
+
 [docker]: https://docs.docker.com/engine/install/debian/
 [ha-super]: https://github.com/home-assistant/supervised-installer
 [hardware]: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-3.html
