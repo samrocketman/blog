@@ -351,8 +351,25 @@ Generate firewalls.
 
 Edit `ip6tables.rules` and change `filter`
 
-* From - `:INPUT ACCEPT [0:0]`
-* To - `:INPUT DROP [0:0]`
+* From - `:INPUT ACCEPT [0:0]` To - `:INPUT DROP [0:0]`
+* From - `:OUTPUT ACCEPT [0:0]` To - `:OUTPUT DROP [0:0]`
+
+Edit `ip6tables.rules` and add the following rules to the `filter` chain.
+
+```iptables
+################################################################################
+# Added by Sam
+################################################################################
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A OUTPUT -p udp -m state --state NEW -m udp --dport 53 -j ACCEPT
+-A OUTPUT -p tcp -m state --state NEW -m tcp --dport 123 -j ACCEPT
+-A OUTPUT -p udp -m state --state NEW -m udp --dport 123 -j ACCEPT
+-A OUTPUT -p tcp -m state --state NEW -m multiport --dport 80,443 -j ACCEPT
+################################################################################
+# END Added by Sam
+################################################################################
+```
 
 Edit `iptables.rules` and add the following rules to the `filter` chain.
 
