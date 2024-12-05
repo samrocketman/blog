@@ -39,6 +39,14 @@
 
 # Hardening operating system
 
+Verify you don't have a back door (exploit created by allwinner CPU maker that
+should already be patched).
+
+```bash
+# this shouldn't exist
+ls /proc/sunxi_debug/sunxi_debug
+```
+
 Set hostname
 
     hostnamectl set-hostname homeassistantzero3
