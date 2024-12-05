@@ -138,7 +138,7 @@ Enabling the firewall will come later after home assistant is installed.
 
 ### Home Assistant Prerequisites
 
-Verify `/etc/os-release has
+Verify `/etc/os-release` has
 
     PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
 
