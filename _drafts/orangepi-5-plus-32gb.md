@@ -249,7 +249,7 @@ umount /mnt
 mkswap /swapfile
 
 # configure secured memory on reboot
-sed '#/tmp#d' /etc/fstab
+sed -i '/\/tmp/d' /etc/fstab
 echo '/tmp2g /tmp ext4 loop,strictatime,noexec,nodev,nosuid 0 0' >> /etc/fstab
 echo '/tmp /var/tmp none bind 0 0' >> /etc/fstab
 echo 'tmpfs /dev/shm tmpfs defaults,noexec,nodev,nosuid,seclabel,size=1G 0 0' >> /etc/fstab
