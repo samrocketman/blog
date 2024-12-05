@@ -320,10 +320,111 @@ authority.  Visit the HTTPS site.
 
 # Enabling VPN and encrypted drive support
 
+Enable Kernel modules (drivers).
+
     modprobe wireguard
     echo wireguard >> /etc/modules
     modprobe dm-crypt
     echo dm-crypt >> /etc/modules
+
+Set up VPN and generate clients.
+
+    git clone https://github.com/samrocketman/docker-wireguard.git
+    cd docker-wireguard/
+    # write a .env file with public IP
+    ./scripts/pihole.sh start
+    ./wvpn.sh start
+
+Issuing new clients.
+
+    ./wvpn.sh new_client "Sam's iPhone"
+    ./wvpn.sh qrcode 10.90.80.1
+
+Do the above procedure for each new client IP.
+
+# Add iptables firewalls
+
+Generate firewalls.
+
+    iptables-save > iptables.rules
+    ip6tables-save > iptables.rules
+
+Edit `ip6tables.rules` and change `filter`
+
+* From - `:INPUT ACCEPT [0:0]`
+* To - `:INPUT DROP [0:0]`
+
+Edit `iptables.rules` and add the following rules to the `filter` chain.
+
+```iptables
+################################################################################
+# Added by Sam
+################################################################################
+:INTERNAL - [0:0]
+:INTERNAL_allow - [0:0]
+:OUTPUT_allow - [0:0]
+:WORLD_allow - [0:0]
+
+# INPUT
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -s 192.168.1.1 -j DROP
+-A INPUT -i lo -j ACCEPT
+-A INPUT -j INTERNAL
+-A INPUT -s 172.0.0.0/8 -j ACCEPT
+-A INPUT -j WORLD_allow
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+
+# world-wide allow VPN port
+-A WORLD_allow -p udp -m state --state NEW -m udp --dport 443 -j ACCEPT
+
+# INTERNAL
+-A INTERNAL -s 192.168.1.0/24 -g INTERNAL_allow
+-A INTERNAL_allow -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+-A INTERNAL_allow -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+-A INTERNAL_allow -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+-A INTERNAL_allow -j RETURN
+
+# OUTPUT
+-A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -d 172.0.0.0/8 -j ACCEPT
+-A OUTPUT -j OUTPUT_allow
+-A OUTPUT -j REJECT --reject-with icmp-host-prohibited
+-A OUTPUT_allow -d 192.168.1.0/24 -j ACCEPT
+#Allow broadcast
+-A OUTPUT_allow -d 255.255.255.255 -j ACCEPT
+#Allow DNS
+-A OUTPUT_allow -p udp -m state --state NEW -m udp --dport 53 -j ACCEPT
+#Allow NTP
+-A OUTPUT_allow -p tcp -m state --state NEW -m tcp --dport 123 -j ACCEPT
+-A OUTPUT_allow -p udp -m state --state NEW -m udp --dport 123 -j ACCEPT
+#system updates and web traffic
+-A OUTPUT_allow -p tcp -m state --state NEW -m multiport --dport 80,443 -j ACCEPT
+-A OUTPUT_allow -j RETURN
+
+################################################################################
+# END Added by Sam
+################################################################################
+```
+
+Edit crontab with `crontab -e` and add the following cron sequences.
+
+```cron
+@reboot /bin/bash -c '/usr/sbin/iptables-restore < /root/iptables.rules'
+@reboot /bin/bash -c '/usr/sbin/ip6tables-restore < /root/ip6tables.rules'
+```
+
+### Stop firewall
+
+    iptables -F
+    ip6tables -F
+
+### Start firewall
+
+You can reboot or run the following.
+
+    iptables-restore < /root/iptables.rules
+    ip6tables-restore < /root/ip6tables.rules
 
 # Turn off LEDs on boot
 
