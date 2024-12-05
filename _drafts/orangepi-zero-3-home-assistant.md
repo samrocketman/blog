@@ -325,6 +325,17 @@ authority.  Visit the HTTPS site.
     modprobe dm-crypt
     echo dm-crypt >> /etc/modules
 
+# Turn off LEDs on boot
+
+Cron can be used to turn off the LEDs on boot.  I like doing it this way because
+later I can script turning on the LEDs for visual notifications.
+
+```bash
+cat > /etc/cron.d/turn-off-leds <<'EOF'
+@reboot root find /sys -type f -name trigger -path '*/leds/*' -exec /bin/sh -c 'echo none > "{}"' \;
+EOF
+```
+
 [docker]: https://docs.docker.com/engine/install/debian/
 [ha-super]: https://github.com/home-assistant/supervised-installer
 [hardware]: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-3.html
