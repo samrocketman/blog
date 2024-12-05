@@ -39,6 +39,10 @@
 
 # Hardening operating system
 
+Set hostname
+
+    hostnamectl set-hostname homeassistantzero3
+
 Change password for root assuming you're logged into root already.
 
     passwd
