@@ -368,7 +368,7 @@ Edit `ip6tables.rules` and change `filter`
 
 Edit `ip6tables.rules` and add the following rules to the `filter` chain.
 
-```iptables
+```ruby
 ################################################################################
 # Added by Sam
 ################################################################################
@@ -385,7 +385,7 @@ Edit `ip6tables.rules` and add the following rules to the `filter` chain.
 
 Edit `iptables.rules` and add the following rules to the `filter` chain.
 
-```iptables
+```ruby
 ################################################################################
 # Added by Sam
 ################################################################################
