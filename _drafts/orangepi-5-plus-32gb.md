@@ -361,6 +361,99 @@ UUID=deadeade-6999-4fc1-b498-8486258a1335 /mnt/fast ext4 defaults,noatime,errors
 UUID=deadeade-12b9-4405-99fd-619b28914527 /mnt/secure ext4 defaults,noauto,noatime,errors=remount-ro 0 0
 ```
 
+# Remote automated management of encrypted disks
+
+Create `/etc/crypttab` and add an entry for the encrypted disk.  For example,
+
+```
+encrypted /dev/disk/by-uuid/deadeade-8652-4fab-9dfa-bac217514b9e none luks,tries=1,noauto
+```
+
+You can manage starting and stopping the encrypted volume with cryptdisks
+scripts.
+
+- `cryptdisks_start encrypted` will decrypt and make available the "encrypted"
+  disk.
+- `cryptdisks_stop encrypted` will close the "encrypted" disk.
+
+Operating over SSH you can set up a `root` user key command in `authorized_keys`
+designed to read from stdin.  Here's the script named `decrypt-disks-stdin.sh`:
+
+```bash
+#!/bin/bash
+# Created by Sam Gleske
+# Tue Jan 13 12:57:46 AM EST 2026
+# DESCRIPTION
+#   Designed for use over ssh with authorized_keys restricted,command.  This
+#   script will read the key to decrypt LUKS from stdin through an SSH
+#   connection.
+set -euo pipefail
+
+stdin_timeout_seconds=10
+disk=/dev/nvme0n1p2
+name=encrypted
+mount=/mnt/secure
+
+# limit input to 100KiB
+read_password_from_stdin() {
+  timeout "$stdin_timeout_seconds" dd bs=1 count=102400 status=none
+}
+strip_input() {
+  tr -dc -- '[:print:]' | tr -d '\n\0\r'
+}
+
+umask 077
+key="$(mktemp /dev/shm/tmp.XXXXXXXXXX)"
+trap 'echo "exit status ${PIPESTATUS[*]}" >&2; rm -f "$key"' EXIT
+echo reading password from stdin >&2
+read_password_from_stdin | strip_input > "$key"
+echo decrypting "$disk" >&2
+cryptsetup open "$disk" "$name" --key-file - < "$key"
+echo mount "$mount" >&2
+mount "$mount"
+```
+
+Add an entry to `/root/.ssh/authorized_keys` executing the above script if a
+specific key connects.
+
+```
+restrict,command="/root/decrypt-disks-stdin.sh" <algo> <key> <comment>
+```
+
+and on a remote client you can create this simple CLI utility to connect over
+ssh and pass the decryption keys via stdin.  On my client, this script is named
+`decrypt-orangepi-disk.sh`.
+
+```bash
+#!/bin/bash
+# Created by Sam Gleske
+# Tue Jan 13 01:10:15 AM EST 2026
+
+set -euo pipefail
+
+passphrase() {
+cat <<'EOF' | gpg -d
+-----BEGIN PGP MESSAGE-----
+... encrypt your passphrase
+-----END PGP MESSAGE-----
+EOF
+}
+
+private_key() {
+cat <<'EOF' | gpg -d
+-----BEGIN PGP MESSAGE-----
+... encrypt your SSH private key
+-----END PGP MESSAGE-----
+EOF
+}
+
+umask 077
+key="$(mktemp)"
+trap 'rm -rf "$key"' EXIT
+private_key > "$key"
+passphrase | ssh -TF /dev/null -i "$key" root@192.168.8.251
+```
+
 # Orangepi zero 2w homeassistant
 
 ### Before you begin
